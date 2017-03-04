@@ -1,0 +1,14 @@
+.feature-row {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.movies-row-container {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.row-item {
+    display: inline-block;
+}

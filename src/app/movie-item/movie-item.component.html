@@ -1,0 +1,25 @@
+<md-card
+    class="top10 bottom10 left2 right2">
+
+  <section>
+    <div fxLayout="row" fxLayoutAlign="space-between">
+      <div fxFlex="48%">
+        <img class="card-image" src="http://image.tmdb.org/t/p/w342/{{movie.posterPath}}">
+      </div>
+      <div fxFlex="48%" style="border: 1px solid green">
+        <div fxLayout="column" fxLayoutAlign="center">
+          <h2 fxFlex="10%" style="border: 1px solid gray">{{ movie.title }}</h2>
+          <p fxFlex="10%" style="border: 1px solid gray">some genres</p>
+          <p fxFlex="10%" style="border: 1px solid gray">some more info</p>
+          <div>
+            <button md-raised-button routerLink="/movie/{{movie.id}}">More Info</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section>
+    <p style="padding: 20px 0;">{{ (movie.overview.length > descriptionLimit) ? movie.overview.substr( 0, (descriptionLimit + 1) ) + "..." : movie.overview }}</p>
+  </section>
+</md-card>

@@ -1,0 +1,8 @@
+.card-image {
+    height: 100%;
+    width: 100%;
+}
+
+.movie-title {
+    min-height: 2em;
+}

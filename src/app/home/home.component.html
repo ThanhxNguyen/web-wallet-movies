@@ -1,0 +1,33 @@
+<!--four blocks display top 20 movies in random genres-->
+<div fxLayout fxLayoutAlign="space-around center" fxLayoutWrap>
+  <md-card fxFlex="24%" class="top10 bottom10">
+    <md-card-header>Top 20 Action Movies</md-card-header>
+  </md-card>
+  <md-card fxFlex="24%" class="top10">
+    <md-card-header>Top 20 Thriller Movies</md-card-header>
+  </md-card>
+  <md-card fxFlex="24%" class="top10">
+    <md-card-header>Top 20 Fanstasy Movies</md-card-header>
+  </md-card>
+  <md-card fxFlex="24%" class="top10">
+    <md-card-header>Top 20 Comedy Movies</md-card-header>
+  </md-card>
+</div>
+
+<!--home page main content-->
+<md-card class="content">
+  <md-tab-group>
+
+    <md-tab *ngFor="let tab of tabs">
+      <template md-tab-label>
+        <h1>{{ tab.label }}</h1>
+      </template>
+      <div fxLayout fxLayoutAlign="space-between stretch" fxLayoutWrap>
+        <wm-movie-item 
+            fxFlex="48%"
+            *ngFor="let movie of tab.data" [movie]="movie"></wm-movie-item>
+      </div>
+    </md-tab>
+
+</md-tab-group>
+</md-card>

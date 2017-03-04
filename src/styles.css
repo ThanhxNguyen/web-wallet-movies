@@ -1,1 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
+
+body {
+    height: 100%;
+}
+
+/* Wrapper for page content to push down footer */
+.wrapper {
+    min-height: 100%;
+    height: auto;
+    width: 80%;
+    margin: auto;
+}
+
+.footer {
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: auto;
+    /*height: 150px;*/
+    background-color: #3e3f3a;
+    /*margin-top: 60px;*/
+}
+
+.top10 {
+    margin-top: 10px;
+}
+
+.bottom10 {
+    margin-bottom: 10px;
+}
+
+.left2 {
+    margin-left: 2px;
+}
+
+.right2 {
+    margin-right: 2px;
+}
+
+/*override material toolbar height*/
+md-toolbar {
+  min-height: 65px !important;
+}
+md-toolbar md-toolbar-row {
+  height: 65px !important;
+}
+
+/*override material input on focus to make label center*/
+.mat-input-placeholder {
+    text-align: center !important;
+}
+
