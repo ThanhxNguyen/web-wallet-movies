@@ -5,13 +5,11 @@ export class Movie {
     releaseDate: string;
     voteAverage: number;
     posterPath: string;
-
-    // constructor(
-    //     id: number,
-    //     title: string,
-    //     overview: string,
-    //     releaseDate: string,
-    //     voteAverage: number,
-    //     posterPath: string,
-    // ) {}
+    genres: Array<string>;
+    budget: number;
+    productionCountries: Array<string>;
+    productionCompanies: Array<string>;
+    revenue: number;
+    runtime: number;
+    language: string;
 }

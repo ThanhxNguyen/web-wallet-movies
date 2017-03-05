@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-
+import { MovieService } from '../services/movie-service.service';
 import { Movie } from '../model/movie';
 
 @Component({
@@ -11,11 +11,12 @@ export class MovieItemComponent implements OnInit {
 
   @Input() movie: Movie;
 
-  descriptionLimit: number = 100;
+  descriptionLimit: number = 200;
   
-  constructor() { }
+  constructor(private movieService: MovieService) { }
 
   ngOnInit() {
+    
   }
 
 }

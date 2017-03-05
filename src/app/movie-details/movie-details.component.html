@@ -1,3 +1,24 @@
-<p>
-  movie-details works!
-</p>
+<md-card
+    class="top10 bottom10 left2 right2">
+
+    <div fxLayout="row" fxLayoutAlign="space-between">
+      <div fxFlex="48%">
+        <img class="card-image img-responsive" src="http://image.tmdb.org/t/p/w342/{{movieDetails.posterPath}}">
+      </div>
+      <div fxFlex="48%">
+        <div fxLayout="column" fxLayoutAlign="center">
+          <md-card-title class="movie-title">{{ movieDetails.title }}</md-card-title>
+          <md-card-subtitle>
+            {{ movieDetails.genres.join(' | ') }}
+          </md-card-subtitle>
+          <md-card-subtitle>
+            Release:&nbsp;{{ movieDetails.releaseDate }}
+          </md-card-subtitle>
+          <md-card-subtitle>
+            Vote Average:&nbsp;{{ movieDetails.voteAverage }}
+          </md-card-subtitle>
+        </div>
+      </div>
+    </div>
+
+</md-card>

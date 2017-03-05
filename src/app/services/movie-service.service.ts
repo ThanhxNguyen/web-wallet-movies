@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { Movie } from '../model/movie';
+import { Cast } from '../model/cast';
+import { Genre } from '../model/genre';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -12,7 +14,33 @@ const API_KEY = '1bd3f3a91c22eef0c9d9c15212f43593';
 @Injectable()
 export class MovieService {
 
-  constructor(private http: Http) { }
+  genreList: Array<Genre>;
+
+  constructor(private http: Http) {
+    this.getGenresFromApi().subscribe(genres => this.genreList = genres);
+  }
+
+  getGenresFromApi() {
+    let genreListUrl = `${BASE_API_URL}/genre/movie/list?api_key=${API_KEY}&language=en-US`;
+    return this.http.get(genreListUrl)
+                            .map(response => {
+                                return this.parseGenres(response.json().genres);
+                            });
+  }
+
+  private parseGenres(rawData: Array<any>): Genre[] {
+    let genreList: Array<Genre> = [];
+    for(let i=0; i<rawData.length; i++) {
+      let temp = rawData[i];
+      let genre = new Genre();
+      genre.id = temp.id;
+      genre.name = temp.name;
+
+      genreList.push(genre);
+    }
+
+    return genreList;
+  }
 
   //get movies from api and return an Observable array of movies
   getMovies(url: string): Observable<Movie[]> {
@@ -36,7 +64,7 @@ export class MovieService {
     let movieCastsUrl: string =  `${BASE_API_URL}/movie/${movieId}/credits?api_key=${API_KEY}`;
     return this.http.get(movieCastsUrl)
                             .map(response => {
-                              
+                                return this.parseCasts(response.json().cast);
                             });
   }
 
@@ -57,6 +85,22 @@ export class MovieService {
         movie.voteAverage = tempMovie.vote_average;
         movie.posterPath = tempMovie.poster_path;
 
+        if(this.genreList && this.genreList.length > 0) {
+          let genresArr: Array<string> = [];
+          for(let j=0; j<tempMovie.genre_ids.length; j++) {
+
+            for(let k=0; k<this.genreList.length; k++) {
+              if(tempMovie.genre_ids[j] === this.genreList[k].id) {
+                //found matching genre object
+                genresArr.push(this.genreList[k].name);
+                break;
+              }//end if
+            }//end inner for loop
+
+          }//end outer for loop
+          movie.genres = genresArr;
+        }//end if
+
         //add to movie array
         movies.push(movie);
 
@@ -64,6 +108,29 @@ export class MovieService {
     }//end for loop
 
     return movies;
+  }
+
+  //this method will parse the raw json response from api and return an array of casts
+  private parseCasts(rawData: Array<any>): Cast[] {
+    //define the limit for how many casts will return to the client, top 10 casts in this case
+    //if the total casts is less than 10, then return all (however, this is unlikely to happen)
+    let limit: number = ( rawData.length > 10 ) ? 10 : rawData.length;
+    let casts: Array<Cast> = [];
+
+    for(let i=0; i<limit; i++) {
+      let tempCast = rawData[i];
+      let cast = new Cast();
+
+      cast.id = tempCast.id;
+      cast.name = tempCast.name;
+      cast.character = tempCast.character;
+      cast.profilePath = tempCast.profile_path
+
+      //add to cast array 
+      casts.push(cast);
+    }
+
+    return casts;
   }
 
 }

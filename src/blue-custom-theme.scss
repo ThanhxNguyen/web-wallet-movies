@@ -1,0 +1,12 @@
+@import '~@angular/material/core/theming/all-theme';
+
+@include mat-core();
+
+$blue-primary: mat-palette($mat-indigo);
+$blue-accent:  mat-palette($mat-pink, A200, A100, A400);
+
+$blue-warn:    mat-palette($mat-red);
+
+$blue-theme: mat-light-theme($blue-primary, $blue-accent, $blue-warn);
+
+@include angular-material-theme($blue-theme);

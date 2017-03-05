@@ -1,8 +1,13 @@
 .card-image {
-    height: 100%;
+    height: 300px;
     width: 100%;
 }
 
 .movie-title {
     min-height: 2em;
+}
+
+.movie-description {
+    padding-top: 20px;
+    min-height: 3em;
 }

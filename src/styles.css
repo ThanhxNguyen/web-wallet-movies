@@ -1,8 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
+/*@import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';*/
+/*@import './themes/blue-custom-theme.scss';*/
 
 body {
     height: 100%;
+    background-color: #F4F4F4;
+}
+
+hr {
+    width: 100%;
+    border: none;
+    height: 1px;
+    background-color: #E0E0E0;
+    /*margin-top: 10px;
+    margin-bottom: 10px;*/
 }
 
 /* Wrapper for page content to push down footer */
@@ -36,6 +47,10 @@ body {
 
 .right2 {
     margin-right: 2px;
+}
+
+.center-text {
+    text-align: center;
 }
 
 /*override material toolbar height*/
