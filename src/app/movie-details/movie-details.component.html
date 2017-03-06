@@ -10,7 +10,7 @@
           <md-card-title class="movie-title">{{ movie.title }}</md-card-title>
           <md-card-subtitle>
             <md-chip-list>
-              <md-chip *ngFor="let genre of movie.genres">{{ genre }}</md-chip>
+              <md-chip class="clickable-chip" *ngFor="let genre of movie.genres" (click)="onGenreClick(genre)">{{ genre.name }}</md-chip>
             </md-chip-list>
           </md-card-subtitle>
           
@@ -44,7 +44,7 @@
           
         </div>
       </div>
-    </div><!--end main div-->
+    </div>
 
     <hr>
     <md-card-title>Overview</md-card-title>
@@ -62,7 +62,7 @@
   <md-card-content *ngIf="recommendedMovieList && recommendedMovieList.length == 0" class="center-text">No recommended movies yet!</md-card-content>
   <div class="recommended-movie-list">
     <div *ngFor="let recommendedMovie of recommendedMovieList" class="list-item">
-      <img src="http://image.tmdb.org/t/p/w342/{{ recommendedMovie.posterPath }}" alt="POSTER">
+      <img (click)="showMovieDetails(recommendedMovie)" class="clickable-chip" src="http://image.tmdb.org/t/p/w342/{{ recommendedMovie.posterPath }}" alt="POSTER">
     </div>
   </div>
 </md-card>

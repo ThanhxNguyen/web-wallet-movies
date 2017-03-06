@@ -1,16 +1,18 @@
 <md-card
-    class="top10 bottom10 left2 right2">
+    class="movie-item-container top10 bottom10 left2 right2">
 
   <section>
     <div fxLayout="row" fxLayoutAlign="space-between">
       <div fxFlex="48%">
-        <img class="card-image img-responsive" src="http://image.tmdb.org/t/p/w342/{{movie.posterPath}}" alt="POSTER IMAGE">
+        <img (click)="showMovieDetails(movie)" class="movie-image img-responsive clickable-chip" src="http://image.tmdb.org/t/p/w342/{{movie.posterPath}}" alt="POSTER IMAGE">
       </div>
       <div fxFlex="48%">
         <div fxLayout="column" fxLayoutAlign="center">
           <md-card-title class="movie-title">{{ movie.title }}</md-card-title>
           <md-card-subtitle>
-            {{ (movie.genres && movie.genres.length > 0) ? movie.genres.join(' | ') : 'Genre: unknown' }}
+            <md-chip-list>
+              <md-chip class="clickable-chip" *ngFor="let genre of movie.genres" (click)="onGenreClick(genre)">{{ genre.name }}</md-chip>
+            </md-chip-list>
           </md-card-subtitle>
           <md-card-subtitle>
             Release Date:&nbsp;{{ movie.releaseDate }}
@@ -19,7 +21,7 @@
             Vote Average:&nbsp;{{ movie.voteAverage }}
           </md-card-subtitle>
           <hr>
-          <button md-raised-button color="accent" routerLink="/movie/{{movie.id}}">More Info</button>
+          <button md-raised-button color="accent" (click)="showMovieDetails(movie)">More Info</button>
         </div>
       </div>
     </div>

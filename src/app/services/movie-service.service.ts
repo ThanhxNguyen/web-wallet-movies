@@ -8,8 +8,7 @@ import { Genre } from '../model/genre';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
-const BASE_API_URL = 'https://api.themoviedb.org/3';
-const API_KEY = '1bd3f3a91c22eef0c9d9c15212f43593';
+import { BASE_API_URL, API_KEY } from '../../config/TMDB';
 
 @Injectable()
 export class MovieService {
@@ -17,7 +16,8 @@ export class MovieService {
   genreList: Array<Genre>;
 
   constructor(private http: Http) {
-    this.getGenresFromApi().subscribe(genres => this.genreList = genres);
+      this.genreList = [];
+      this.getGenresFromApi().subscribe(genres => this.genreList = genres);
   }
 
   getGenresFromApi() {
@@ -30,13 +30,15 @@ export class MovieService {
 
   private parseGenres(rawData: Array<any>): Genre[] {
     let genreList: Array<Genre> = [];
-    for(let i=0; i<rawData.length; i++) {
-      let temp = rawData[i];
-      let genre = new Genre();
-      genre.id = temp.id;
-      genre.name = temp.name;
+    if(rawData != null && rawData.length > 0) {
+      for(let i=0; i<rawData.length; i++) {
+        let temp = rawData[i];
+        let genre = new Genre();
+        genre.id = temp.id;
+        genre.name = temp.name;
 
-      genreList.push(genre);
+        genreList.push(genre);
+      }//end for loop
     }
 
     return genreList;
@@ -51,7 +53,7 @@ export class MovieService {
                             });
   }
 
-  getRecommendedMovies(movieId: string): Observable<Movie[]> {
+  getRecommendedMovies(movieId: number): Observable<Movie[]> {
     let recommendedMoviesUrl = `${BASE_API_URL}/movie/${movieId}/recommendations?api_key=${API_KEY}&language=en-US&page=1`;
     return this.http.get(recommendedMoviesUrl)
                           .map( response => {
@@ -60,7 +62,7 @@ export class MovieService {
   }
 
   //get single movie from api with an movie id 
-  getMovie(movieId: string) {
+  getMovie(movieId: number) {
     let singleMovieUrl: string = `${BASE_API_URL}/movie/${movieId}?api_key=${API_KEY}`;
     return this.http.get(singleMovieUrl)
                             .map(response => {
@@ -68,7 +70,7 @@ export class MovieService {
                             });
   }
 
-  getCasts(movieId: string, castLimit: number) {
+  getCasts(movieId: number, castLimit: number) {
     let movieCastsUrl: string =  `${BASE_API_URL}/movie/${movieId}/credits?api_key=${API_KEY}`;
     return this.http.get(movieCastsUrl)
                             .map(response => {
@@ -88,26 +90,36 @@ export class MovieService {
         let movie = new Movie();
         movie.id = tempMovie.id;
         movie.title = tempMovie.title;
-        movie.overview = tempMovie.overview;
+        movie.overview = (tempMovie.overview != null && tempMovie.overview.length > 0) ? tempMovie.overview : 'No description available yet!';
         movie.releaseDate = tempMovie.release_date;
         movie.voteAverage = tempMovie.vote_average;
         movie.posterPath = tempMovie.poster_path;
 
-        if(this.genreList && this.genreList.length > 0) {
-          let genresArr: Array<string> = [];
-          for(let j=0; j<tempMovie.genre_ids.length; j++) {
+        let genresArr: Array<Genre> = [];
+        if(tempMovie.genre_ids != null && tempMovie.genre_ids.length > 0) {
 
-            for(let k=0; k<this.genreList.length; k++) {
-              if(tempMovie.genre_ids[j] === this.genreList[k].id) {
-                //found matching genre object
-                genresArr.push(this.genreList[k].name);
-                break;
-              }//end if
-            }//end inner for loop
+            if(this.genreList != null && this.genreList.length > 0) {
+              for(let j=0; j<tempMovie.genre_ids.length; j++) {
 
-          }//end outer for loop
+                for(let k=0; k<this.genreList.length; k++) {
+                  if(tempMovie.genre_ids[j] === this.genreList[k].id) {
+                    //found matching genre object
+                    genresArr.push(this.genreList[k]);
+                    break;
+                  }//end if
+                }//end inner for loop
+
+              }//end outer for loop
+              movie.genres = genresArr;
+            }//end if 
+
+        } else {
+          let tempGenre = new Genre();
+          tempGenre.id = 0;
+          tempGenre.name = 'unknown';
+          genresArr.push(tempGenre);
           movie.genres = genresArr;
-        }//end if
+        }
 
         //add to movie array
         movies.push(movie);

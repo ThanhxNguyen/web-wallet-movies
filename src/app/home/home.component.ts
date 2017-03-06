@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
+import { BASE_API_URL, API_KEY } from '../../config/TMDB';
 //services
 import { MovieService } from '../services/movie-service.service';
 
@@ -10,8 +11,8 @@ import { Genre } from '../model/genre';
 const POPULAR = "POPULAR";
 const NEW_RELEASE = "NEW RELEASE";
 const HOME_TABS = [
-  { type: NEW_RELEASE, url: "https://api.themoviedb.org/3/discover/movie?api_key=1bd3f3a91c22eef0c9d9c15212f43593&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2017-03-04&primary_release_date.lte=2017-03-10" },
-  { type: POPULAR, url: "https://api.themoviedb.org/3/discover/movie?api_key=1bd3f3a91c22eef0c9d9c15212f43593&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1" }
+  { type: NEW_RELEASE, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2017-03-04&primary_release_date.lte=2017-03-10` },
+  { type: POPULAR, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1` }
 ]
 
 @Component({
@@ -28,7 +29,10 @@ export class HomeComponent implements OnInit {
   recommendationLimit: number = 4;
   genreList: Array<Genre>;
 
-  constructor(private movieService: MovieService) { }
+  constructor(
+    private movieService: MovieService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.movieService.getGenresFromApi()
@@ -36,8 +40,6 @@ export class HomeComponent implements OnInit {
                                     this.genreList = genres;
                                         if(this.genreList && this.genreList.length > 0) {
                                           this.recommendations = this.generateRandomGenreList(this.genreList);
-                                        } else {
-                                          console.log('genre list emtpty');
                                         }
                                 });
 
@@ -63,8 +65,8 @@ export class HomeComponent implements OnInit {
   }//end ngOnInit
 
   onRecommendationClick(genre: Genre) {
-    console.log('rec clicked');
-    console.log(genre);
+    //navigate to movies page based on genre 
+    this.router.navigate(['movies', 'genre', genre.id]);
   }
 
   private generateRandomGenreList(genres: Array<Genre>): Array<Genre> {
@@ -73,6 +75,7 @@ export class HomeComponent implements OnInit {
     randomNumbersArr = this.generateRandomNumbers(0, genres.length);
 
     for(let i=0; i<randomNumbersArr.length; i++) {
+      //store genre objects base on random generated numbers
       recommendationArr.push(this.genreList[ randomNumbersArr[i] ]);
     }
 
@@ -84,6 +87,7 @@ export class HomeComponent implements OnInit {
 
     while(randomNumbersArr.length < 4) {
       let ran = Math.floor( (Math.random() * max) + min );
+      //check if the number already existed in the array, if not push new number into array
       if(randomNumbersArr.indexOf(ran) == -1) {
         randomNumbersArr.push(ran);
         continue;

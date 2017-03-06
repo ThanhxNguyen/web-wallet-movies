@@ -1,4 +1,17 @@
-.card-image {
+.movie-item-container {
+    transition: box-shadow 300ms ease-out;
+    -webkit-transition: box-shadow 300ms ease-out;
+    -moz-transition: box-shadow 300ms ease-out;
+    -o-transition: box-shadow 300ms ease-out;
+}
+.movie-item-container:hover {
+    box-shadow: 0 0 10px #757575;
+    -moz-box-shadow: 0 0 10px #757575;
+    -webkit-box-shadow: 0 0 10px #757575;
+    -o-box-shadow: 0 0 10px #757575;
+}
+
+.movie-image {
     height: 300px;
     width: 100%;
 }
@@ -10,4 +23,6 @@
 .movie-description {
     padding-top: 20px;
     min-height: 3em;
+    height: 3em;
+    line-height: 1.5;
 }

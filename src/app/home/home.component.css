@@ -6,4 +6,7 @@
 
 .recommendation-link {
     width: 100%;
+    color: #E6E8F5;
+    font-size: .8em;
+    /*font-weight: bold;*/
 }

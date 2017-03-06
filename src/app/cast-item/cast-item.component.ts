@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Cast } from '../model/cast';
 
@@ -11,9 +12,14 @@ export class CastItemComponent implements OnInit {
 
   @Input() cast: Cast;
   
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  showCastDetails(castId: number): void {
+    //navigate to cast details page
+    this.router.navigate(['cast', castId]);
   }
 
 }

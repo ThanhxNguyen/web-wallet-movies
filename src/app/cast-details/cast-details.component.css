@@ -1,0 +1,36 @@
+.card-image {
+    height: 450px;
+    width: 100%;
+}
+
+.cast-name {
+    min-height: 2em;
+}
+
+.cast-bio {
+    line-height: 1.5;
+}
+
+.movie-credit {
+    height: 250px;
+    position: relative;
+}
+
+.movie-credit img {
+    height: 100%;
+    width: 100%;
+}
+
+.movie-credit .movie-subtitle {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    background-color: lightblue;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.movie-credit:hover .movie-subtitle {
+    visibility: visible;
+    opacity: 1;
+}

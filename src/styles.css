@@ -53,6 +53,15 @@ hr {
     text-align: center;
 }
 
+.clickable-chip {
+    cursor: pointer;
+}
+
+.active-route {
+    background-color: white;
+    border: 1px solid black;
+}
+
 /*override material toolbar height*/
 md-toolbar {
   min-height: 65px !important;

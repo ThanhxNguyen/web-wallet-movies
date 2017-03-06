@@ -1,15 +1,27 @@
 <nav class="fix-navbar">
 
   <md-toolbar color="primary">
-    <span>Wallet Movies</span>
+    <span class="brand">Wallet Movies</span>
 
-    <a routerLink="/home" routerLinkActive="active" md-button>Home</a>
+    <button class="nav-link" routerLink="/home" [routerLinkActive]="['mat-button-focus']" md-button>Home</button>
 
-    <a routerLink="/about" routerLinkActive="active" md-button>About</a>
+    <button class="nav-link" routerLink="/about" [routerLinkActive]="['mat-button-focus']" md-button>About</button>
   </md-toolbar>
 
-      <md-input-container class="search-bar" style="background-color: #3F51B5">
-        <input mdInput type="text" placeholder="Search movies" style="text-align: center">
-      </md-input-container>
-
+  <input #searchBar type="text" class="search-bar" placeholder="Search movies" 
+            (keyup)="search(searchBar.value)"
+            (focusout)="onSearchBarLostFocus(searchBar.value)"
+            [value]="searchValue">
+  <div *ngIf="(searchResults | async)?.length > 0" class="search-hint-container">
+    <p *ngIf="(searchResults | async)?.length==0" class="center-text" style="margin: 20px 0; font-style: italic; font-size: .8em">No movies found!</p>
+    <div *ngFor="let movie of searchResults | async" 
+          fxLayout="row" fxLayoutAlign="space-between center" 
+          class="search-hint-row"
+          (click)="onSearchHintRowClick(movie)">
+      <img src="http://image.tmdb.org/t/p/w92/{{movie.posterPath}}" alt="POSTER" style="height: 70px; width: 50px;">
+      <span>{{ movie.title }}</span>
+      <span fxLayout fxLayoutAlign="space-around center"><md-icon>star_rate</md-icon>&nbsp;&nbsp;{{ movie.voteAverage }}</span>
+    </div>
+  </div>
+      
 </nav>

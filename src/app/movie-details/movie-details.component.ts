@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 //routing
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 //services
 import { MovieService } from '../services/movie-service.service';
-
+import { IMAGE_BASE_URL } from '../../config/TMDB';
 import { Cast } from '../model/cast';
 import { Movie } from '../model/movie';
+import { Genre } from '../model/genre';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
@@ -18,14 +19,17 @@ export class MovieDetailsComponent implements OnInit {
   movie: Movie;
   castList: Array<Cast>;
   recommendedMovieList: Array<Movie>;
-  movieId: string;
+  movieId: number;
   moviePosterUrl;
 
   constructor(
     private currentRoute: ActivatedRoute,
+    private router: Router,
     private movieService: MovieService,
   ) { 
     this.movie = new Movie();
+    this.castList = [];
+    this.recommendedMovieList = [];
   }
 
   ngOnInit() {
@@ -33,13 +37,14 @@ export class MovieDetailsComponent implements OnInit {
     this.currentRoute.params
                               //get params from route and create new Observable
                               .switchMap( (params: Params) => {
-                                  this.movieId = params['id'];
+                                //+ symbol converts id param string to number
+                                  this.movieId = +params['id'];
                                   return this.movieService.getMovie(this.movieId);
                               })
                               .subscribe( fullMovieDetailsObj => {
                                   // console.log(fullMovieDetailsObj);
                                   this.movie = this.parseMovie(fullMovieDetailsObj);
-                                  this.moviePosterUrl = `http://image.tmdb.org/t/p/w342/${this.movie.posterPath}`;
+                                  this.moviePosterUrl = `${IMAGE_BASE_URL}/w500${this.movie.posterPath}`;
                                   //make another http request to api to get casts list 
                                   this.movieService.getCasts(this.movieId, 5)
                                                               .subscribe(casts => {
@@ -53,6 +58,14 @@ export class MovieDetailsComponent implements OnInit {
                                                               });
                               });
   }//end ngOnInit
+
+  onGenreClick(genre: Genre): void {
+    if(genre.id !== 0) this.router.navigate(['movies', 'genre', genre.id]);
+  }
+
+  showMovieDetails(movie: Movie): void {
+    this.router.navigate(['movie', movie.id]);
+  }
 
   //handle event from CastListComponent
   getAllCasts(getMore: boolean) {
@@ -89,15 +102,22 @@ export class MovieDetailsComponent implements OnInit {
     return movie;
   }//end parseMovie
 
-  private parseGenres(rawGenres: any): Array<string> {
-    let genres: Array<string> = [];
+  private parseGenres(rawGenres: any): Array<Genre> {
+    let genres: Array<Genre> = [];
     //check if the raw genre values array is empty or not
     if(rawGenres && rawGenres.length > 0) {
       for(let i=0; i<rawGenres.length; i++) {
-        genres.push(rawGenres[i].name);
+        let tempGenre = new Genre();
+        tempGenre.id = rawGenres[i].id;
+        tempGenre.name = rawGenres[i].name;
+
+        genres.push(tempGenre);
       }//end for loop
     } else {
-      genres.push('unknown');
+      let tempGenre = new Genre();
+      tempGenre.id = 0;
+      tempGenre.name = 'unknown';
+      genres.push(tempGenre);
     }
 
     return genres;

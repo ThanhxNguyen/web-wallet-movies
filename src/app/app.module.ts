@@ -9,6 +9,7 @@ import 'hammerjs';
 
 //services
 import { MovieService } from './services/movie-service.service';
+import { CastService } from './services/cast-service.service';
 
 //routing
 import { RouterModule } from '@angular/router';
@@ -19,7 +20,6 @@ import { MainComponent } from './main/main.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MovieItemComponent } from './movie-item/movie-item.component';
-import { FeatureRowComponent } from './feature-row/feature-row.component';
 import { HomeComponent } from './home/home.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -27,6 +27,7 @@ import { AboutComponent } from './about/about.component';
 import { CastListComponent } from './cast-list/cast-list.component';
 import { CastItemComponent } from './cast-item/cast-item.component';
 import { CastDetailsComponent } from './cast-details/cast-details.component';
+import { MoviesWithGenreComponent } from './movies-with-genre/movies-with-genre.component';
 
 @NgModule({
   declarations: [
@@ -35,14 +36,14 @@ import { CastDetailsComponent } from './cast-details/cast-details.component';
     FooterComponent,
     NavbarComponent,
     MovieItemComponent,
-    FeatureRowComponent,
     HomeComponent,
     MovieDetailsComponent,
     PageNotFoundComponent,
     AboutComponent,
     CastListComponent,
     CastItemComponent,
-    CastDetailsComponent
+    CastDetailsComponent,
+    MoviesWithGenreComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +54,8 @@ import { CastDetailsComponent } from './cast-details/cast-details.component';
     RouterModule.forRoot(routing)
   ],
   providers: [
-    MovieService
+    MovieService,
+    CastService
   ],
   bootstrap: [AppComponent]
 })

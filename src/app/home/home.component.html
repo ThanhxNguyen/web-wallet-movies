@@ -1,10 +1,9 @@
 <!--four blocks display top 20 movies in random genres-->
-<div fxLayout fxLayoutAlign="space-around stretch" fxLayoutWrap>
+<div fxLayout fxLayoutAlign="space-between stretch" fxLayoutWrap>
   <md-card style="background-color: #3F51B5"
       fxFlex="24%" class="top10 bottom10"
-      *ngFor="let item of recommendations"
-      (click)="onRecommendationClick(item)">
-      <button class="recommendation-link" md-button>Top 20 {{ item.name }}</button>
+      *ngFor="let item of recommendations">
+      <button class="recommendation-link" md-button (click)="onRecommendationClick(item)">Top 20 {{ item.name }}</button>
   </md-card>
 </div>
 

@@ -1,3 +1,37 @@
-<p>
-  cast-details works!
-</p>
+<md-card class="top10">
+
+  <div fxLayout="row" fxLayoutAlign="space-between">
+      <div fxFlex="35%">
+        <img class="card-image img-responsive" [src]="castProfilePhotoUrl" alt="PROFILE PHOTO">
+      </div>
+
+      <div fxFlex="60%">
+        <md-card-title class="cast-name">{{ cast.name }}</md-card-title>
+        <md-card-subtitle>
+            Date of Birth:&nbsp;<md-chip>{{ cast.birthday }}</md-chip>
+        </md-card-subtitle>
+        <md-card-subtitle>Place of Birth: {{ cast.placeOfBirth }}</md-card-subtitle>
+
+        <hr>
+        <md-card-title>Biography</md-card-title>
+        <md-card-content>
+          <p class="cast-bio">{{ cast.biography }}</p>
+        </md-card-content>
+      </div>
+  </div>
+
+</md-card>
+
+<md-card class="top10">
+  <md-card-title class="center-text">Known For</md-card-title>
+  <hr>
+  <div fxLayout fxLayoutAlign="space-between center" fxLayoutWrap>
+    <div *ngFor="let movie of movieCredits" fxFlex="19%" class="movie-credit top10" (click)="onMovieCreditClick(movie)">
+      <img src="http://image.tmdb.org/t/p/w342/{{ movie.posterPath }}" alt="POSTER">
+      <div class="movie-subtitle" fxLayout fxLayoutAlign="space-around center">
+        <md-icon fxFlex="20%">date_range</md-icon>
+        <p fxFlex="75%%">{{ movie.releaseDate }}</p>
+      </div>
+    </div>
+  </div>
+</md-card>

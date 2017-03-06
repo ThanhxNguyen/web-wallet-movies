@@ -1,3 +1,5 @@
+import { Genre } from './genre';
+
 export class Movie {
     id: number;
     title: string;
@@ -6,7 +8,7 @@ export class Movie {
     status: string;
     voteAverage: number;
     posterPath: string;
-    genres: Array<string>;
+    genres: Array<Genre>;
     budget: number;
     productionCountries: Array<string>;
     productionCompanies: Array<string>;
