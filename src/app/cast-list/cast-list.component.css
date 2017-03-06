@@ -1,0 +1,11 @@
+.cast-list-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.center-horizontal {
+    margin: auto;
+}

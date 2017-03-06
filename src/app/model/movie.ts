@@ -3,6 +3,7 @@ export class Movie {
     title: string;
     overview: string;
     releaseDate: string;
+    status: string;
     voteAverage: number;
     posterPath: string;
     genres: Array<string>;
@@ -11,5 +12,4 @@ export class Movie {
     productionCompanies: Array<string>;
     revenue: number;
     runtime: number;
-    language: string;
 }

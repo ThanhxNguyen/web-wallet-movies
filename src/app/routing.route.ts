@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import { CastDetailsComponent } from './cast-details/cast-details.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 export const routing: Routes = [
@@ -12,6 +13,8 @@ export const routing: Routes = [
     { path: 'about', component: AboutComponent },
     //movie details route
     { path: 'movie/:id', component: MovieDetailsComponent },
+    //cast details route 
+    { path: 'cast/:id', component },
     //default route
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     //called when url is not found

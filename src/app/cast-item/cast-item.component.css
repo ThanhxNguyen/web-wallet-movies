@@ -1,0 +1,14 @@
+.circle-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.cast-name {
+    font-weight: bold;
+}
+
+.cast-character {
+    font-style: italic;
+    font-size: .7em;
+}

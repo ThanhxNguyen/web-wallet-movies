@@ -51,6 +51,14 @@ export class MovieService {
                             });
   }
 
+  getRecommendedMovies(movieId: string): Observable<Movie[]> {
+    let recommendedMoviesUrl = `${BASE_API_URL}/movie/${movieId}/recommendations?api_key=${API_KEY}&language=en-US&page=1`;
+    return this.http.get(recommendedMoviesUrl)
+                          .map( response => {
+                              return this.parseMovies(response.json().results);
+                          });
+  }
+
   //get single movie from api with an movie id 
   getMovie(movieId: string) {
     let singleMovieUrl: string = `${BASE_API_URL}/movie/${movieId}?api_key=${API_KEY}`;
@@ -60,11 +68,11 @@ export class MovieService {
                             });
   }
 
-  getCasts(movieId: string) {
+  getCasts(movieId: string, castLimit: number) {
     let movieCastsUrl: string =  `${BASE_API_URL}/movie/${movieId}/credits?api_key=${API_KEY}`;
     return this.http.get(movieCastsUrl)
                             .map(response => {
-                                return this.parseCasts(response.json().cast);
+                                return this.parseCasts(response.json().cast, castLimit);
                             });
   }
 
@@ -111,23 +119,31 @@ export class MovieService {
   }
 
   //this method will parse the raw json response from api and return an array of casts
-  private parseCasts(rawData: Array<any>): Cast[] {
+  private parseCasts(rawData: Array<any>, castLimit: number): Cast[] {
     //define the limit for how many casts will return to the client, top 10 casts in this case
     //if the total casts is less than 10, then return all (however, this is unlikely to happen)
-    let limit: number = ( rawData.length > 10 ) ? 10 : rawData.length;
+    let limit: number;
     let casts: Array<Cast> = [];
-
+    if(castLimit === 0) {
+      //no limit, get everything
+      limit = rawData.length;
+    } else {
+       limit = ( rawData.length > castLimit ) ? castLimit : rawData.length
+    }
     for(let i=0; i<limit; i++) {
       let tempCast = rawData[i];
       let cast = new Cast();
 
-      cast.id = tempCast.id;
-      cast.name = tempCast.name;
-      cast.character = tempCast.character;
-      cast.profilePath = tempCast.profile_path
+      if(tempCast.profile_path != null) {
+        cast.id = tempCast.id;
+        cast.name = tempCast.name;
+        cast.character = tempCast.character;
+        cast.profilePath = tempCast.profile_path
+        
+        //add to cast array 
+        casts.push(cast);
+      }
 
-      //add to cast array 
-      casts.push(cast);
     }
 
     return casts;

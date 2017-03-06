@@ -1,24 +1,68 @@
 <md-card
-    class="top10 bottom10 left2 right2">
+    class="top10">
 
     <div fxLayout="row" fxLayoutAlign="space-between">
-      <div fxFlex="48%">
-        <img class="card-image img-responsive" src="http://image.tmdb.org/t/p/w342/{{movieDetails.posterPath}}">
+      <div fxFlex="35%">
+        <img class="card-image img-responsive" [src]="moviePosterUrl" alt="POSTER IMAGE">
       </div>
-      <div fxFlex="48%">
+      <div fxFlex="60%">
         <div fxLayout="column" fxLayoutAlign="center">
-          <md-card-title class="movie-title">{{ movieDetails.title }}</md-card-title>
+          <md-card-title class="movie-title">{{ movie.title }}</md-card-title>
           <md-card-subtitle>
-            {{ movieDetails.genres.join(' | ') }}
+            <md-chip-list>
+              <md-chip *ngFor="let genre of movie.genres">{{ genre }}</md-chip>
+            </md-chip-list>
           </md-card-subtitle>
+          
           <md-card-subtitle>
-            Release:&nbsp;{{ movieDetails.releaseDate }}
+            Release Date:&nbsp;{{ movie.releaseDate }}
           </md-card-subtitle>
+
           <md-card-subtitle>
-            Vote Average:&nbsp;{{ movieDetails.voteAverage }}
+            Status:&nbsp;<md-chip>{{ movie.status }}</md-chip>
           </md-card-subtitle>
+
+          <md-card-subtitle>
+            Budget:&nbsp;{{ movie.budget === 0 ? 'unknown' : '$' + movie.budget + 'M' }}
+          </md-card-subtitle>
+
+          <md-card-subtitle>
+            Runtime:&nbsp;{{ movie.runtime ? movie.runtime + ' mins' :  'unknown'}}
+          </md-card-subtitle>
+
+          <md-card-subtitle>
+            Vote Average:&nbsp;<md-chip>{{ movie.voteAverage }}</md-chip>
+          </md-card-subtitle>
+
+          <hr>
+          <md-card-title>Production Companies</md-card-title>
+          <md-card-subtitle>
+            <md-chip-list>
+              <md-chip *ngFor="let company of movie.productionCompanies">{{ company }}</md-chip>
+            </md-chip-list>
+          </md-card-subtitle>
+          
         </div>
       </div>
-    </div>
+    </div><!--end main div-->
 
+    <hr>
+    <md-card-title>Overview</md-card-title>
+    <md-card-content>
+      <p class="movie-description">{{ movie.overview }}</p>
+    </md-card-content>
+
+</md-card>
+
+<wm-cast-list [castList]="castList" (onViewAllCasts)="getAllCasts($event)"></wm-cast-list>
+
+<md-card class="top10">
+  <md-card-title class="center-text">Similar Movies</md-card-title>
+  <hr>
+  <md-card-content *ngIf="recommendedMovieList && recommendedMovieList.length == 0" class="center-text">No recommended movies yet!</md-card-content>
+  <div class="recommended-movie-list">
+    <div *ngFor="let recommendedMovie of recommendedMovieList" class="list-item">
+      <img src="http://image.tmdb.org/t/p/w342/{{ recommendedMovie.posterPath }}" alt="POSTER">
+    </div>
+  </div>
 </md-card>

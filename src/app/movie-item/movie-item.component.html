@@ -4,13 +4,13 @@
   <section>
     <div fxLayout="row" fxLayoutAlign="space-between">
       <div fxFlex="48%">
-        <img class="card-image img-responsive" src="http://image.tmdb.org/t/p/w342/{{movie.posterPath}}">
+        <img class="card-image img-responsive" src="http://image.tmdb.org/t/p/w342/{{movie.posterPath}}" alt="POSTER IMAGE">
       </div>
       <div fxFlex="48%">
         <div fxLayout="column" fxLayoutAlign="center">
           <md-card-title class="movie-title">{{ movie.title }}</md-card-title>
           <md-card-subtitle>
-            {{ movie.genres.join(' | ') }}
+            {{ (movie.genres && movie.genres.length > 0) ? movie.genres.join(' | ') : 'Genre: unknown' }}
           </md-card-subtitle>
           <md-card-subtitle>
             Release Date:&nbsp;{{ movie.releaseDate }}

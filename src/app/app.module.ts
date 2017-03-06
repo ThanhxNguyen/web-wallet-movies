@@ -24,6 +24,9 @@ import { HomeComponent } from './home/home.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AboutComponent } from './about/about.component';
+import { CastListComponent } from './cast-list/cast-list.component';
+import { CastItemComponent } from './cast-item/cast-item.component';
+import { CastDetailsComponent } from './cast-details/cast-details.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,10 @@ import { AboutComponent } from './about/about.component';
     HomeComponent,
     MovieDetailsComponent,
     PageNotFoundComponent,
-    AboutComponent
+    AboutComponent,
+    CastListComponent,
+    CastItemComponent,
+    CastDetailsComponent
   ],
   imports: [
     BrowserModule,

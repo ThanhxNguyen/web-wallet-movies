@@ -1,0 +1,12 @@
+<md-card class="top10">
+  <md-card-title class="center-text">Top Casts</md-card-title>
+  <hr>
+  <md-card-content *ngIf="castList && castList.length == 0" class="center-text">No cast information available!</md-card-content>
+  <div fxLayout fxLayoutAlign="center center" fxLayoutWrap>
+    <wm-cast-item fxFlex="20%" *ngFor="let cast of castList" [cast]="cast"></wm-cast-item>
+  </div>
+  <hr>
+  <md-card-actions align="center">
+  <button md-button disabled="{{ castList && (castList.length == 0 || castList.length < 5) }}" (click)="viewAllCasts()">{{ viewMoreCastsBtnText }}</button>
+  </md-card-actions>
+</md-card>
