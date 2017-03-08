@@ -1,14 +1,16 @@
-<md-card class="top10">
+<md-card class="top10" [@flyInOut]>
 
-  <div fxLayout="row" fxLayoutAlign="space-between">
-      <div fxFlex="35%">
+  <div 
+      fxLayout="row" fxLayoutAlign="space-between"
+      fxLayout.xs="column">
+      <div fxFlex="35%" fxFlex.sm="48%">
         <img class="card-image img-responsive" [src]="castProfilePhotoUrl" alt="PROFILE PHOTO">
       </div>
 
-      <div fxFlex="60%">
+      <div fxFlex="60%" fxFlex.sm="48%">
         <md-card-title class="cast-name">{{ cast.name }}</md-card-title>
         <md-card-subtitle>
-            Date of Birth:&nbsp;<md-chip>{{ cast.birthday }}</md-chip>
+            Date of Birth:&nbsp;{{ cast.birthday }}
         </md-card-subtitle>
         <md-card-subtitle>Place of Birth: {{ cast.placeOfBirth }}</md-card-subtitle>
 
@@ -25,13 +27,23 @@
 <md-card class="top10">
   <md-card-title class="center-text">Known For</md-card-title>
   <hr>
-  <div fxLayout fxLayoutAlign="space-between center" fxLayoutWrap>
-    <div *ngFor="let movie of movieCredits" fxFlex="19%" class="movie-credit top10" (click)="onMovieCreditClick(movie)">
-      <img src="http://image.tmdb.org/t/p/w342/{{ movie.posterPath }}" alt="POSTER">
+  <div 
+      fxLayout fxLayoutAlign="space-between center" fxLayoutWrap>
+    <div 
+      *ngFor="let movie of movieCredits | slice:0:movieCreditsListLimit" 
+      fxFlex="19%" fxFlex.sm="24%" fxFlex.xs="49%"
+      class="movie-credit top10 related-movies" 
+      (click)="onMovieCreditClick(movie)">
+      <img class="clickable-chip movie-poster" src="http://image.tmdb.org/t/p/w342/{{ movie.posterPath }}" alt="POSTER">
       <div class="movie-subtitle" fxLayout fxLayoutAlign="space-around center">
         <md-icon fxFlex="20%">date_range</md-icon>
-        <p fxFlex="75%%">{{ movie.releaseDate }}</p>
+        <p fxFlex="75%">{{ movie.releaseDate }}</p>
       </div>
     </div>
   </div>
+
+  <hr>
+  <md-card-actions align="center">
+    <button color="accent" disabled="{{ movieCredits.length < movieCreditsListLimit }}" md-raised-button (click)="showMoreMovieCredits()">{{ viewMoreBtnText }}</button>
+  </md-card-actions>
 </md-card>

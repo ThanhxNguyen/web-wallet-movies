@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 //routing
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { flyInOut } from '../animations/flyInOut.animation';
+// import { fadeInOut } from '../animations/fadeInOut.animation';
 //services
 import { MovieService } from '../services/movie-service.service';
 import { IMAGE_BASE_URL } from '../../config/TMDB';
@@ -12,7 +15,12 @@ import 'rxjs/add/operator/switchMap';
 @Component({
   selector: 'wm-movie-details',
   templateUrl: './movie-details.component.html',
-  styleUrls: ['./movie-details.component.css']
+  styleUrls: ['./movie-details.component.css'],
+  animations: [flyInOut],
+  host: { 
+    '[@flyInOut]': 'true',
+    '[style.display]': " 'block' ",
+  }
 })
 export class MovieDetailsComponent implements OnInit {
 
@@ -26,6 +34,7 @@ export class MovieDetailsComponent implements OnInit {
     private currentRoute: ActivatedRoute,
     private router: Router,
     private movieService: MovieService,
+    private titleService: Title
   ) { 
     this.movie = new Movie();
     this.castList = [];
@@ -44,6 +53,8 @@ export class MovieDetailsComponent implements OnInit {
                               .subscribe( fullMovieDetailsObj => {
                                   // console.log(fullMovieDetailsObj);
                                   this.movie = this.parseMovie(fullMovieDetailsObj);
+                                  //set title for this page 
+                                  this.titleService.setTitle(this.movie.title);
                                   this.moviePosterUrl = `${IMAGE_BASE_URL}/w500${this.movie.posterPath}`;
                                   //make another http request to api to get casts list 
                                   this.movieService.getCasts(this.movieId, 5)

@@ -1,5 +1,38 @@
-<footer>
+<footer class="footer-container">
+    <div 
+        fxLayout="row" fxLayoutAlign="space-around center" fxLayoutWrap>
+      <div fxFlex="40%" fxFlex.xs="90%">
+          <div fxLayout="column" fxLayoutAlign="start center">
+              <h4 class="center-text footer-header">Navigation</h4>
+              <button md-button routerLink="/home">Home</button>
+              <button md-button routerLink="/about">About</button>
+          </div>
+      </div><!--end block 1-->
 
-  <p>this is a footer</p>
+      <div fxFlex="40%" fxFlex.xs="90%">
+          <div fxLayout="column" fxLayoutAlign="start center">
+              <h4 class="center-text footer-header">Connect with me on</h4>
+              <!--twitter-->
+              <div fxLayout="row" fxLayoutAlign="center center">
+                  <img class="social-icon" md-icon-button src="/assets/twitter_icon.png" alt="">
+                  <a md-button href="https://twitter.com/Thanhpn_Nguyen">Twitter</a>
+              </div>
+              <!--Github-->
+              <!--<div fxLayout="row" fxLayoutAlign="center center">
+                  <img class="social-icon" md-icon-button src="/assets/github_icon.png" alt="">
+                  <button md-button routerLink="/home">GitHub</button>
+              </div>-->
+              <!--Linkedin-->
+              <div fxLayout="row" fxLayoutAlign="center center">
+                  <img class="social-icon" md-icon-button src="/assets/linkedin_icon.png" alt="">
+                  <a href="https://www.linkedin.com/in/thanh-nguyen-78b910126/" md-button>Linkedin</a>
+              </div>
+          </div>
+      </div><!--end block 2-->
+    </div>
 
+    <hr>
+    <div class="center-text" style="padding-bottom: 10px;">
+      <span style="font-style: italic; font-size: .7em; margin: auto;">This website uses the TMDb API but is not endorsed or certified by TMDb.</span>
+    </div>
 </footer>

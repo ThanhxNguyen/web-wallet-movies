@@ -1,1 +1,15 @@
+.footer-container {
+    color: #FFFFFF;
+}
 
+.social-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.footer-header {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}

@@ -1,27 +1,67 @@
-<nav class="fix-navbar">
+<nav class="fixed-navbar">
 
   <md-toolbar color="primary">
-    <span class="brand">Wallet Movies</span>
-
-    <button class="nav-link" routerLink="/home" [routerLinkActive]="['mat-button-focus']" md-button>Home</button>
-
-    <button class="nav-link" routerLink="/about" [routerLinkActive]="['mat-button-focus']" md-button>About</button>
+      <div fxHide.xs style="height: 100%;">
+        <span class="brand" md-button routerLink="/home">Wallet Movies</span>
+        <button class="nav-link" routerLink="/home" [routerLinkActive]="['mat-button-focus']" md-button>Home</button>
+        <button class="nav-link" routerLink="/about" [routerLinkActive]="['mat-button-focus']" md-button>About</button>
+      </div>
+    
+      <button md-button [md-menu-trigger-for]="menu" fxHide fxShow.xs>
+        <md-icon>menu</md-icon>
+      </button>
   </md-toolbar>
+  <!--this menu will be triggered when hamburger icon is clicked-->
+  <md-menu class="overlay-menu" x-position="before" #menu="mdMenu">
+    <button md-menu-item routerLink="/home">
+        <md-icon>home</md-icon>
+        <span>Home</span>
+    </button>
+    <hr>
+    <button md-menu-item routerLink="/about">
+        <md-icon>info_outline</md-icon>
+        <span>About</span>
+    </button>
+  </md-menu>
 
-  <input #searchBar type="text" class="search-bar" placeholder="Search movies" 
+  <div class="search-bar-container" *ngIf="showSearchBar" [@fadeInOut]>
+    
+    <div class="search-input-container" fxLayout="row" fxLayoutAlign="space-between center">
+      <md-icon>search</md-icon>
+      <input #searchBar type="text" class="search-bar" placeholder="Search movies" 
             (keyup)="search(searchBar.value)"
             (focusout)="onSearchBarLostFocus(searchBar.value)"
+            (focus)="onSearchBarGainFocus()"
             [value]="searchValue">
-  <div *ngIf="(searchResults | async)?.length > 0" class="search-hint-container">
-    <p *ngIf="(searchResults | async)?.length==0" class="center-text" style="margin: 20px 0; font-style: italic; font-size: .8em">No movies found!</p>
+      <button 
+            md-icon-button 
+            (click)="clearSearch()"
+            *ngIf="showClearSearchBtn"
+            [@fadeInOut] >
+                <md-icon>clear</md-icon>
+      </button>
+    </div>
+    <!--<div 
+          *ngIf="(searchResults | async)?.length==0" 
+          style="background-color: #FFFFFF; width: 100%; height: 60px;" 
+          fxLayout="row" fxLayoutAlign="center center"
+          [@fadeInOut] >
+      <p class="center-text" style="margin: 20px 0; font-style: italic; font-size: .8em">No movies found!</p>
+    </div>-->
+
+    <div 
+          *ngIf="(searchResults | async)?.length > 0" 
+          class="search-hint-container"
+          [@fadeInOut] >
     <div *ngFor="let movie of searchResults | async" 
           fxLayout="row" fxLayoutAlign="space-between center" 
           class="search-hint-row"
           (click)="onSearchHintRowClick(movie)">
-      <img src="http://image.tmdb.org/t/p/w92/{{movie.posterPath}}" alt="POSTER" style="height: 70px; width: 50px;">
-      <span>{{ movie.title }}</span>
-      <span fxLayout fxLayoutAlign="space-around center"><md-icon>star_rate</md-icon>&nbsp;&nbsp;{{ movie.voteAverage }}</span>
-    </div>
-  </div>
+        <img src="http://image.tmdb.org/t/p/w92/{{movie.posterPath}}" alt="POSTER" style="height: 70px; width: 50px;">
+        <span>{{ movie.title }}</span>
+        <span fxLayout fxLayoutAlign="space-around center"><md-icon>star_rate</md-icon>&nbsp;&nbsp;{{ movie.voteAverage }}</span>
+      </div>
+    </div><!--end hint container-->
+  </div><!--end search bar container-->
       
 </nav>

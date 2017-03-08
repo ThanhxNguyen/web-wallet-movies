@@ -1,12 +1,13 @@
-.fix-navbar {
+.fixed-navbar {
     position: fixed;
     width: 100%;
-    z-index: 9999;
+    z-index: 999;
 }
 
 .brand {
     padding-left: 10px;
     padding-right: 10px;
+    cursor: pointer;
 }
 
 .nav-link {
@@ -14,18 +15,19 @@
     height: 100%;
 }
 
+.overlay-menu {
+    position: fixed;
+    z-index: 1000;
+}
+
 .search-bar {
     width: 100%;
     color: #757575;
     background-color: #FFFFFF;
-    /*box-shadow: 0px 1px 10px #757575;
-    -moz-box-shadow: 0 1px 10px #757575;
-    -webkit-box-shadow: 0 1px 10px #757575;
-    -o-box-shadow: 0 1px 10px #757575;*/
-    text-align: center;
     border: none;
     height: 60px;
     font-size: 1.1em;
+    font-style: italic;
     /*transition: box-shadow 300ms ease-in-out;
     -webkit-transition: box-shadow 300ms ease-in-out;
     -moz-transition: box-shadow 300ms ease-in-out;
@@ -33,7 +35,6 @@
     -o-transition: box-shadow 300s ease-in-out;*/
     outline: none;
     padding: 3px 0px 3px 3px;
-    border-bottom: 1px solid #E0E0E0;
 }
 
 .search-bar:focus {
@@ -57,6 +58,18 @@
     white-space: nowrap;
 }
 
+.search-input-container {
+    width: 100%; 
+    padding-left: 10%; 
+    padding-right: 10%; 
+    background-color: #FFFFFF; 
+    /*border-bottom: 1px solid #E0E0E0;*/
+    box-shadow: 0px 1px 10px #757575;
+    -moz-box-shadow: 0 1px 10px #757575;
+    -webkit-box-shadow: 0 1px 10px #757575;
+    -o-box-shadow: 0 1px 10px #757575;
+}
+
 .search-hint-row {
     width: 80%;
     margin: auto;
@@ -66,6 +79,19 @@
 
 .search-hint-row:hover {
     background-color: rgba(244, 244, 244, 1);
+}
+
+@media screen and (max-width: 599px) {
+    .search-hint-row {
+        width: 100%;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .search-input-container {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
 }
 
 

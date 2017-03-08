@@ -1,7 +1,10 @@
 <md-card
+    [@flyInOut]
     class="top10">
 
-    <div fxLayout="row" fxLayoutAlign="space-between">
+    <div 
+        fxLayout="row" fxLayoutAlign="space-between"
+        fxLayout.xs="column">
       <div fxFlex="35%">
         <img class="card-image img-responsive" [src]="moviePosterUrl" alt="POSTER IMAGE">
       </div>
@@ -13,6 +16,7 @@
               <md-chip class="clickable-chip" *ngFor="let genre of movie.genres" (click)="onGenreClick(genre)">{{ genre.name }}</md-chip>
             </md-chip-list>
           </md-card-subtitle>
+          <hr>
           
           <md-card-subtitle>
             Release Date:&nbsp;{{ movie.releaseDate }}
@@ -61,8 +65,12 @@
   <hr>
   <md-card-content *ngIf="recommendedMovieList && recommendedMovieList.length == 0" class="center-text">No recommended movies yet!</md-card-content>
   <div class="recommended-movie-list">
-    <div *ngFor="let recommendedMovie of recommendedMovieList" class="list-item">
-      <img (click)="showMovieDetails(recommendedMovie)" class="clickable-chip" src="http://image.tmdb.org/t/p/w342/{{ recommendedMovie.posterPath }}" alt="POSTER">
+    <div *ngFor="let recommendedMovie of recommendedMovieList" class="list-item related-movies">
+      <img (click)="showMovieDetails(recommendedMovie)" class="clickable-chip movie-poster" src="http://image.tmdb.org/t/p/w342/{{ recommendedMovie.posterPath }}" alt="POSTER">
+      <div class="movie-subtitle" fxLayout fxLayoutAlign="space-around center">
+        <md-icon fxFlex="20%">date_range</md-icon>
+        <p fxFlex="75%">{{ movie.releaseDate }}</p>
+      </div>
     </div>
   </div>
 </md-card>

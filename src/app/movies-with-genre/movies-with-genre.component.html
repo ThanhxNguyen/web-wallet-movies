@@ -1,10 +1,10 @@
-<md-card class="top10">
-  <md-card-title>Top {{ genreName }} movies</md-card-title>
+<md-card class="top10" [@flyInOut]>
+  <md-card-title>Top {{ genreName }} Movies</md-card-title>
   <hr>
 
   <div fxLayout fxLayoutAlign="space-between stretch" fxLayoutWrap>
     <wm-movie-item 
-        fxFlex="48%"
+        fxFlex="48%" fxFlex.sm="98%" fxFlex.xs="98%"
         *ngFor="let movie of movieList" [movie]="movie"></wm-movie-item>
   </div>
 

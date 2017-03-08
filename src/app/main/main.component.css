@@ -1,5 +1,6 @@
 .container {
-    padding-top: 140px;
-    padding-bottom: 60px;
+    /*(toolbar=65) + (searchbar=60) + (gap=50) = 175px*/
+    padding-top: 175px;
+    padding-bottom: 50px;
 }
 

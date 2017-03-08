@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { flyInOut } from '../animations/flyInOut.animation';
+import { fadeInOut } from '../animations/fadeInOut.animation';
 import { BASE_API_URL, API_KEY } from '../../config/TMDB';
 //services
 import { MovieService } from '../services/movie-service.service';
-
 import { Movie } from '../model/movie';
 import { Genre } from '../model/genre';
 
@@ -11,14 +13,19 @@ import { Genre } from '../model/genre';
 const POPULAR = "POPULAR";
 const NEW_RELEASE = "NEW RELEASE";
 const HOME_TABS = [
-  { type: NEW_RELEASE, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2017-03-04&primary_release_date.lte=2017-03-10` },
-  { type: POPULAR, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1` }
+  { type: POPULAR, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1` },
+  { type: NEW_RELEASE, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2017-03-04&primary_release_date.lte=2017-03-10` }
 ]
 
 @Component({
   selector: 'wm-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  animations: [flyInOut, fadeInOut],
+  host: { 
+    '[@flyInOut]': 'true',
+    '[style.display]': " 'block' "
+  }
 })
 export class HomeComponent implements OnInit {
 
@@ -31,10 +38,13 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private movieService: MovieService,
-    private router: Router
+    private router: Router,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
+    //set title for this page 
+    this.titleService.setTitle('Home');
     this.movieService.getGenresFromApi()
                                 .subscribe(genres => {
                                     this.genreList = genres;

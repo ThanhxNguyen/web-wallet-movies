@@ -1,15 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { flyInOut } from '../animations/flyInOut.animation';
+// import { fadeInOut } from '../animations/fadeInOut.animation';
 
 @Component({
   selector: 'wm-about',
   templateUrl: './about.component.html',
-  styleUrls: ['./about.component.css']
+  styleUrls: ['./about.component.css'],
+  animations: [flyInOut],
+  host: { 
+    '[@flyInOut]': 'true',
+    '[style.display]': " 'block' ",
+  }
 })
 export class AboutComponent implements OnInit {
 
-  constructor() { }
+  constructor(private titleService: Title) { }
 
   ngOnInit() {
+    //set title for this page
+    this.titleService.setTitle('About');
   }
 
 }

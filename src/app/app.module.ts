@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -55,7 +55,8 @@ import { MoviesWithGenreComponent } from './movies-with-genre/movies-with-genre.
   ],
   providers: [
     MovieService,
-    CastService
+    CastService,
+    Title
   ],
   bootstrap: [AppComponent]
 })

@@ -5,6 +5,7 @@
 
 .movie-title {
     min-height: 2em;
+    font-size: 2em;
 }
 
 .movie-description {
@@ -20,8 +21,8 @@
 
 .recommended-movie-list .list-item {
     display: inline-block;
-    padding-left: 20px;
-    padding-right: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 .recommended-movie-list .list-item img {
     width: 200px;

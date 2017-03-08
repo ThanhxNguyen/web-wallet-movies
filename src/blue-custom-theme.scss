@@ -2,7 +2,7 @@
 
 @include mat-core();
 
-$blue-primary: mat-palette($mat-indigo);
+$blue-primary: mat-palette($mat-light-blue);
 $blue-accent:  mat-palette($mat-pink, A200, A100, A400);
 
 $blue-warn:    mat-palette($mat-red);

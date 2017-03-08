@@ -1,14 +1,19 @@
 <!--four blocks display top 20 movies in random genres-->
-<div fxLayout fxLayoutAlign="space-between stretch" fxLayoutWrap>
-  <md-card style="background-color: #3F51B5"
-      fxFlex="24%" class="top10 bottom10"
-      *ngFor="let item of recommendations">
-      <button class="recommendation-link" md-button (click)="onRecommendationClick(item)">Top 20 {{ item.name }}</button>
-  </md-card>
+<div [@flyInOut] 
+    fxLayout fxLayoutAlign="space-between stretch" fxLayoutWrap
+    fxLayoutAlign.md="space-around stretch">
+    <md-card style="background-color: #03A9F4"
+        fxFlex="24%" fxFlex.md="49%" fxFlex.sm="98%" fxFlex.xs="98%"
+        class="top10 bottom10"
+        *ngFor="let item of recommendations">
+        <button class="recommendation-link" md-button (click)="onRecommendationClick(item)">Top 20 {{ item.name }}</button>
+    </md-card>
 </div>
 
 <!--home page main content-->
-<md-card class="content">
+<md-card 
+    *ngIf="tabs.length>0" [@fadeInOut]
+      class="content">
   <md-tab-group>
 
     <md-tab *ngFor="let tab of tabs">
@@ -17,7 +22,7 @@
       </template>
       <div fxLayout fxLayoutAlign="space-between stretch" fxLayoutWrap>
         <wm-movie-item 
-            fxFlex="48%"
+            fxFlex="48%" fxFlex.sm="98%" fxFlex.xs="98%"
             *ngFor="let movie of tab.data" [movie]="movie"></wm-movie-item>
       </div>
     </md-tab>
