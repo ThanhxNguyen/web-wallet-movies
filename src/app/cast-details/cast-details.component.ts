@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 //routing
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { flyInOut } from '../animations/flyInOut.animation';
-// import { fadeInOut } from '../animations/fadeInOut.animation';
+// import { flyInOut } from '../animations/flyInOut.animation';
+import { fadeInOut } from '../animations/fadeInOut.animation';
 //services
 import { CastService } from '../services/cast-service.service';
 import { IMAGE_BASE_URL } from '../../config/TMDB';
@@ -15,9 +15,9 @@ import 'rxjs/add/operator/switchMap';
   selector: 'wm-cast-details',
   templateUrl: './cast-details.component.html',
   styleUrls: ['./cast-details.component.css'],
-  animations: [flyInOut],
+  animations: [fadeInOut],
   host: { 
-    '[@flyInOut]': 'true',
+    '[@fadeInOut]': 'true',
     '[style.display]': " 'block' ",
   }
 })

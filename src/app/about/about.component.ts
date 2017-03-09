@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { flyInOut } from '../animations/flyInOut.animation';
-// import { fadeInOut } from '../animations/fadeInOut.animation';
+// import { flyInOut } from '../animations/flyInOut.animation';
+import { fadeInOut } from '../animations/fadeInOut.animation';
 
 @Component({
   selector: 'wm-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.css'],
-  animations: [flyInOut],
+  animations: [fadeInOut],
   host: { 
-    '[@flyInOut]': 'true',
+    '[@fadeInOut]': 'true',
     '[style.display]': " 'block' ",
   }
 })

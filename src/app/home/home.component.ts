@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { flyInOut } from '../animations/flyInOut.animation';
+// import { flyInOut } from '../animations/flyInOut.animation';
 import { fadeInOut } from '../animations/fadeInOut.animation';
 import { BASE_API_URL, API_KEY } from '../../config/TMDB';
 //services
@@ -9,21 +9,30 @@ import { MovieService } from '../services/movie-service.service';
 import { Movie } from '../model/movie';
 import { Genre } from '../model/genre';
 
+//get date instance
+let date = new Date();
+let currentDate = date.toISOString().substr(0, 10);
+//add more days to it
+date.setDate( date.getDate() + 20 );
+//convert date object to ISO format string and grab the date from that string YYYY-MM-DD
+let newReleaseDate = date.toISOString().substr(0, 10);
+
 //contain info for tabs on home page
 const POPULAR = "POPULAR";
 const NEW_RELEASE = "NEW RELEASE";
+const UPCOMING = "UPCOMING"
 const HOME_TABS = [
   { type: POPULAR, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1` },
-  { type: NEW_RELEASE, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=2017-03-04&primary_release_date.lte=2017-03-10` }
+  { type: NEW_RELEASE, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=${currentDate}&primary_release_date.lte=${newReleaseDate}` }
 ]
 
 @Component({
   selector: 'wm-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  animations: [flyInOut, fadeInOut],
+  animations: [fadeInOut],
   host: { 
-    '[@flyInOut]': 'true',
+    '[@fadeInOut]': 'true',
     '[style.display]': " 'block' "
   }
 })

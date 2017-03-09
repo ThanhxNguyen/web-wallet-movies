@@ -1,6 +1,11 @@
-<md-card class="top10" [@flyInOut]>
+<md-card class="top10" [@fadeInOut]>
   <md-card-title>Top {{ genreName }} Movies</md-card-title>
   <hr>
+  <div 
+      *ngIf="movieList.length==0"
+      fxLayout fxLayoutAlign="center center">
+    <md-spinner></md-spinner>
+  </div>
 
   <div fxLayout fxLayoutAlign="space-between stretch" fxLayoutWrap>
     <wm-movie-item 

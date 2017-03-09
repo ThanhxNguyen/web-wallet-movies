@@ -1,4 +1,4 @@
-<md-card class="top10" [@flyInOut]>
+<md-card class="top10" [@fadeInOut]>
 
   <div 
       fxLayout="row" fxLayoutAlign="space-between"
@@ -34,7 +34,7 @@
       fxFlex="19%" fxFlex.sm="24%" fxFlex.xs="49%"
       class="movie-credit top10 related-movies" 
       (click)="onMovieCreditClick(movie)">
-      <img class="clickable-chip movie-poster" src="http://image.tmdb.org/t/p/w342/{{ movie.posterPath }}" alt="POSTER">
+      <img class="clickable-chip movie-poster" src="//image.tmdb.org/t/p/w342/{{ movie.posterPath }}" alt="POSTER">
       <div class="movie-subtitle" fxLayout fxLayoutAlign="space-around center">
         <md-icon fxFlex="20%">date_range</md-icon>
         <p fxFlex="75%">{{ movie.releaseDate }}</p>

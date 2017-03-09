@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { flyInOut } from '../animations/flyInOut.animation';
-// import { fadeInOut } from '../animations/fadeInOut.animation';
+// import { flyInOut } from '../animations/flyInOut.animation';
+import { fadeInOut } from '../animations/fadeInOut.animation';
 //service
 import { MovieService } from '../services/movie-service.service';
 import { BASE_API_URL, API_KEY } from '../../config/TMDB';
@@ -13,9 +13,9 @@ import 'rxjs/add/operator/switchMap';
   selector: 'wm-movies-with-genre',
   templateUrl: './movies-with-genre.component.html',
   styleUrls: ['./movies-with-genre.component.css'],
-  animations: [flyInOut],
+  animations: [fadeInOut],
   host: { 
-    '[@flyInOut]': 'true',
+    '[@fadeInOut]': 'true',
     '[style.display]': " 'block' ",
   }
 })

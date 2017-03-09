@@ -11,7 +11,7 @@
 }
 
 .nav-link {
-    font-size: .8em;
+    font-size: .9em;
     height: 100%;
 }
 
@@ -75,6 +75,7 @@
     margin: auto;
     padding-top: 5px;
     padding-bottom: 5px;
+    font-family: roboto, "Helvetica Neue", sans-serif;
 }
 
 .search-hint-row:hover {
