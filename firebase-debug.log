@@ -1,0 +1,31 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase deploy --token 1/MYlVeggZTOKwxNa7XCtIOpKUI4Kn0DThZ8Auc15ixfA
+[debug] CLI Version:  3.4.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.10.0
+[debug] Time:         Thu Mar 09 2017 17:21:05 GMT+1100 (AEDT)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase"]
+[debug] > refreshing access token with scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase"]
+[debug] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/MYlVeggZTOKwxNa7XCtIOpKUI4Kn0DThZ8Auc15ixfA',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email openid https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase' } 
+ Thu Mar 09 2017 17:21:05 GMT+1100 (AEDT)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/wallet-movie  
+ Thu Mar 09 2017 17:21:05 GMT+1100 (AEDT)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/wallet-movie/tokens  
+ Thu Mar 09 2017 17:21:07 GMT+1100 (AEDT)
+[debug] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'wallet-movie'...
+[info] 
+[info] i  deploying database, hosting
+[info] ✔  database: rules ready to deploy.
+[info] i  hosting: preparing dist directory for upload...
+[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/wallet-movie/uploads/-KeliaxU4sjmUFr7Ipw7?fileCount=20&message=  
+ Thu Mar 09 2017 17:21:10 GMT+1100 (AEDT)

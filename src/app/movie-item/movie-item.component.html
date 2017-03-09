@@ -2,11 +2,12 @@
     class="movie-item-container top10 bottom10 left2 right2">
 
   <section>
-    <div fxLayout="row" fxLayoutAlign="space-between">
-      <div fxFlex="48%">
+    <div 
+        fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
+      <div fxFlex="48%" fxFlex.xs="100%">
         <img (click)="showMovieDetails(movie)" class="movie-image img-responsive clickable-chip" src="//image.tmdb.org/t/p/w342/{{movie.posterPath}}" alt="POSTER IMAGE">
       </div>
-      <div fxFlex="48%">
+      <div fxFlex="48%" fxFlex.xs="100%">
         <div fxLayout="column" fxLayoutAlign="center">
           <md-card-title class="movie-title">{{ movie.title }}</md-card-title>
           <md-card-subtitle>

@@ -8,7 +8,7 @@
             fxFlex="24%" fxFlex.md="49%" fxFlex.sm="49%" fxFlex.xs="98%"
             class="top10 bottom10"
             *ngFor="let item of recommendations">
-            <button class="recommendation-link" md-button (click)="onRecommendationClick(item)">Top 20 {{ item.name }}</button>
+            <button class="recommendation-link" md-button (click)="onRecommendationClick(item)">Top {{ item.name }}</button>
         </md-card>
     </div>
 
