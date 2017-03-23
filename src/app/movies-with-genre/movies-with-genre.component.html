@@ -11,6 +11,8 @@
     <wm-movie-item 
         fxFlex="48%" fxFlex.sm="98%" fxFlex.xs="98%"
         *ngFor="let movie of movieList" [movie]="movie"></wm-movie-item>
+
   </div>
+  <ngb-pagination [collectionSize]="collectionSize" [maxSize]="maxSize" [rotate]="true" [boundaryLinks]="true" [(page)]="page" (pageChange)="pageChange($event)"></ngb-pagination>
 
 </md-card>

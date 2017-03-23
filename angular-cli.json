@@ -24,7 +24,7 @@
         "blue-custom-theme.scss"
       ],
       "scripts": [
-        "libs/web-animations.min.js"
+        
       ],
       "environments": {
         "source": "environments/environment.ts",

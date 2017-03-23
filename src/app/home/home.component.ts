@@ -22,8 +22,8 @@ const POPULAR = "POPULAR";
 const NEW_RELEASE = "NEW RELEASE";
 const UPCOMING = "UPCOMING"
 const HOME_TABS = [
-  { type: POPULAR, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1` },
-  { type: NEW_RELEASE, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=${currentDate}&primary_release_date.lte=${newReleaseDate}` }
+  { type: NEW_RELEASE, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_date.gte=${currentDate}&primary_release_date.lte=${newReleaseDate}` },
+  { type: POPULAR, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false` },
 ]
 
 @Component({
@@ -38,8 +38,16 @@ const HOME_TABS = [
 })
 export class HomeComponent implements OnInit {
 
+  //pagination
+  maxSize: number = 5;
+  page: number = 1;
+  maxTotalPages: number = 100;
+  //items per page
+  pageSize: number = 20;
+
   //store tabs in array
   tabs: Array<any> = [];
+  selectedTab: number = 0;
   //an array to store random selected genres to display top 20 movies with random genres on home page 
   recommendations: Array<Genre> = [];
   recommendationLimit: number = 4;
@@ -54,24 +62,29 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     //set title for this page 
     this.titleService.setTitle('Home');
-    this.movieService.getGenresFromApi()
-                                .subscribe(genres => {
-                                    this.genreList = genres;
-                                        if(this.genreList && this.genreList.length > 0) {
-                                          this.recommendations = this.generateRandomGenreList(this.genreList);
-                                        }
-                                });
+    this.genreList = this.movieService.genreList;
+    if(!this.genreList || this.genreList.length == 0) {
+      this.movieService.getGenresFromApi()
+                                  .subscribe(genres => {
+                                      this.genreList = genres;
+                                          if(this.genreList && this.genreList.length > 0) {
+                                            this.recommendations = this.generateRandomGenreList(this.genreList);
+                                          }
+                                  });
+    }
 
 
     //loop through HOME_TABS and get movies from api according to each tab and store data into tabs array.
     for(let i=0; i<HOME_TABS.length; i++) {
       let tab = HOME_TABS[i];
-      this.movieService.getMovies(tab.url).subscribe(
+      let movieUrl = tab.url + `&page=${this.page}`;
+      this.movieService.getMovies(movieUrl).subscribe(
         //successfully getting movies from api
-        (movies) => {
+        (data) => {
           let tempTab: any = {};
           tempTab.label =  tab.type;
-          tempTab.data = movies;
+          tempTab.data = data.movies;
+          tempTab.totalPages = data.totalPages > 100 ? this.maxTotalPages : data.totalPages;
 
           this.tabs.push(tempTab);
         },
@@ -116,6 +129,25 @@ export class HomeComponent implements OnInit {
     }//end while loop
 
     return randomNumbersArr;
+  }
+
+  //invoked when pagination changes
+  pageChange(currentPage): void {
+    let tab = this.tabs[this.selectedTab];
+    //empty old movie list in this tab 
+    tab.data = [];
+    this.page = currentPage;
+    let movieUrl = HOME_TABS[this.selectedTab].url + `&page=${this.page}`;
+    console.log('url: ' + movieUrl);
+    this.movieService.getMovies(movieUrl)
+                .subscribe(data => tab.data = data.movies);
+  }
+
+  //invoked when current active tab changes
+  selectChange(tab): void {
+    //reset pagination 
+    this.page = 1;
+    this.selectedTab = tab.index;
   }
 
 }

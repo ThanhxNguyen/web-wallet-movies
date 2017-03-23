@@ -13,7 +13,7 @@ import { BASE_API_URL, API_KEY } from '../../config/TMDB';
 @Injectable()
 export class MovieService {
 
-  genreList: Array<Genre>;
+  public genreList: Array<Genre>;
 
   constructor(private http: Http) {
       this.genreList = [];
@@ -45,11 +45,16 @@ export class MovieService {
   }
 
   //get movies from api and return an Observable array of movies
-  getMovies(url: string): Observable<Movie[]> {
+  getMovies(url: string): Observable<any> {
     return this.http.get(url)
                             .map( response => {
+                              let rawData = response.json();
                               //parse raw data 
-                              return this.parseMovies(response.json().results)
+                              let movies = this.parseMovies(rawData.results);
+                              return {
+                                movies: movies,
+                                totalPages: rawData.total_pages
+                              };
                             });
   }
 
@@ -85,46 +90,44 @@ export class MovieService {
       let tempMovie = rawData[i];
 
       //check if the poster is available yet, if not remove it from results
-      if(tempMovie.poster_path != null) {
-        //extract values from raw data and store to movie object
-        let movie = new Movie();
-        movie.id = tempMovie.id;
-        movie.title = tempMovie.title;
-        movie.overview = (tempMovie.overview != null && tempMovie.overview.length > 0) ? tempMovie.overview : 'No description available yet!';
-        movie.releaseDate = tempMovie.release_date;
-        movie.voteAverage = tempMovie.vote_average;
-        movie.posterPath = tempMovie.poster_path;
+      //extract values from raw data and store to movie object
+      let movie = new Movie();
+      movie.id = tempMovie.id;
+      movie.title = tempMovie.title;
+      movie.overview = (tempMovie.overview != null && tempMovie.overview.length > 0) ? tempMovie.overview : 'No description available yet!';
+      movie.releaseDate = tempMovie.release_date;
+      movie.voteAverage = tempMovie.vote_average;
+      movie.posterPath = tempMovie.poster_path;
 
-        let genresArr: Array<Genre> = [];
-        if(tempMovie.genre_ids != null && tempMovie.genre_ids.length > 0) {
+      let genresArr: Array<Genre> = [];
+      if(tempMovie.genre_ids != null && tempMovie.genre_ids.length > 0) {
 
-            if(this.genreList != null && this.genreList.length > 0) {
-              for(let j=0; j<tempMovie.genre_ids.length; j++) {
+          if(this.genreList != null && this.genreList.length > 0) {
+            for(let j=0; j<tempMovie.genre_ids.length; j++) {
 
-                for(let k=0; k<this.genreList.length; k++) {
-                  if(tempMovie.genre_ids[j] === this.genreList[k].id) {
-                    //found matching genre object
-                    genresArr.push(this.genreList[k]);
-                    break;
-                  }//end if
-                }//end inner for loop
+              for(let k=0; k<this.genreList.length; k++) {
+                if(tempMovie.genre_ids[j] === this.genreList[k].id) {
+                  //found matching genre object
+                  genresArr.push(this.genreList[k]);
+                  break;
+                }//end if
+              }//end inner for loop
 
-              }//end outer for loop
-              movie.genres = genresArr;
-            }//end if 
+            }//end outer for loop
+            movie.genres = genresArr;
+          }//end if 
 
-        } else {
-          let tempGenre = new Genre();
-          tempGenre.id = 0;
-          tempGenre.name = 'unknown';
-          genresArr.push(tempGenre);
-          movie.genres = genresArr;
-        }
+      } else {
+        let tempGenre = new Genre();
+        tempGenre.id = 0;
+        tempGenre.name = 'unknown';
+        genresArr.push(tempGenre);
+        movie.genres = genresArr;
+      }
 
-        //add to movie array
-        movies.push(movie);
+      //add to movie array
+      movies.push(movie);
 
-      }//end if
     }//end for loop
 
     return movies;

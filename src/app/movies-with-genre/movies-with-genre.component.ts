@@ -21,9 +21,16 @@ import 'rxjs/add/operator/switchMap';
 })
 export class MoviesWithGenreComponent implements OnInit {
 
+  //pagination
+  maxSize:number = 5;
+  page:number = 1;
+  collectionSize:number;
+
   genreId: number;
   genreName: string;
   movieList: Array<Movie>;
+  baseMoviesWithGenreUrl: string;
+  movieData: any;
 
   constructor(
     private movieService: MovieService,
@@ -35,6 +42,7 @@ export class MoviesWithGenreComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.baseMoviesWithGenreUrl = `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false`;
     //set title for this page 
     this.titleService.setTitle('Movies');
     this.currentRoute.params
@@ -62,12 +70,27 @@ export class MoviesWithGenreComponent implements OnInit {
                                                                       }
                                                                   });
                                     }//end if-else
-                                    let moviesWithGenreUrl = `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&with_genres=${this.genreId}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`;
-                                    return this.movieService.getMovies(moviesWithGenreUrl);
+                                    let movieUrl = this.baseMoviesWithGenreUrl + `&with_genres=${this.genreId}&page=${this.page}`;
+                                    return this.movieService.getMovies(movieUrl);
                                 })
-                                .subscribe(movies => {
-                                    this.movieList = movies;
+                                .subscribe(data => {
+                                    this.movieData = data;
+                                    this.movieList = this.movieData.movies;
+                                    this.collectionSize = this.movieData.totalPages;
                                 });
+  }//end ngOnInit
+
+  pageChange(currentPage): void {
+    //empty current list 
+    this.movieList = [];
+    this.page = currentPage;
+    let movieUrl = this.baseMoviesWithGenreUrl + `&with_genres=${this.genreId}&page=${this.page}`;
+
+    this.movieService.getMovies(movieUrl)
+              .subscribe(data => {
+                this.movieData = data;
+                this.movieList = this.movieData.movies;
+              });
   }
 
 }

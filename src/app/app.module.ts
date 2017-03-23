@@ -7,6 +7,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import 'hammerjs';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 //services
 import { MovieService } from './services/movie-service.service';
 import { CastService } from './services/cast-service.service';
@@ -51,7 +53,8 @@ import { MoviesWithGenreComponent } from './movies-with-genre/movies-with-genre.
     HttpModule,
     MaterialModule,
     FlexLayoutModule.forRoot(),
-    RouterModule.forRoot(routing)
+    RouterModule.forRoot(routing),
+    NgbModule.forRoot()
   ],
   providers: [
     MovieService,

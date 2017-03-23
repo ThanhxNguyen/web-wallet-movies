@@ -12,27 +12,31 @@
         </md-card>
     </div>
 
-    <div 
-        *ngIf="tabs.length==0"
-        fxLayout fxLayoutAlign="center center">
-        <md-spinner></md-spinner>
-    </div>
-
     <!--home page main content-->
     <md-card 
         *ngIf="tabs.length>0" [@fadeInOut]
         class="content">
-    <md-tab-group>
+    <md-tab-group (selectChange)="selectChange($event)">
 
         <md-tab *ngFor="let tab of tabs">
-        <template md-tab-label>
-            <h1>{{ tab.label }}</h1>
-        </template>
-        <div fxLayout fxLayoutAlign="space-between stretch" fxLayoutWrap>
-            <wm-movie-item 
-                fxFlex="48%" fxFlex.sm="98%" fxFlex.xs="98%"
-                *ngFor="let movie of tab.data" [movie]="movie"></wm-movie-item>
-        </div>
+
+            <div 
+                *ngIf="tab.data.length==0"
+                fxLayout fxLayoutAlign="center center">
+                <md-spinner></md-spinner>
+            </div>
+
+            <template md-tab-label>
+                <h1>{{ tab.label }}</h1>
+            </template>
+            <div fxLayout fxLayoutAlign="space-between stretch" fxLayoutWrap>
+                <wm-movie-item 
+                    fxFlex="48%" fxFlex.sm="98%" fxFlex.xs="98%"
+                    *ngFor="let movie of tab.data" [movie]="movie"></wm-movie-item>
+                    
+                    <!--pagination-->
+            </div>
+            <ngb-pagination [collectionSize]="tab.totalPages * 20" [pageSize]="pageSize" [maxSize]="maxSize" [rotate]="true" [boundaryLinks]="true" [(page)]="page" (pageChange)="pageChange($event)"></ngb-pagination>
         </md-tab>
 
     </md-tab-group>
