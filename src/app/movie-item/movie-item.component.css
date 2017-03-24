@@ -1,4 +1,4 @@
-.movie-item-container {
+/*.movie-item-container {
     transition: box-shadow 300ms ease-out;
     -webkit-transition: box-shadow 300ms ease-out;
     -moz-transition: box-shadow 300ms ease-out;
@@ -9,7 +9,7 @@
     -moz-box-shadow: 0 0 10px #757575;
     -webkit-box-shadow: 0 0 10px #757575;
     -o-box-shadow: 0 0 10px #757575;
-}
+}*/
 
 .movie-image {
     height: 300px;
@@ -31,6 +31,10 @@
 @media screen and (max-width: 599px) {
     .movie-description {
         height: auto;
+    }
+
+    .movie-image {
+        margin-bottom: 5px;
     }
 }
 

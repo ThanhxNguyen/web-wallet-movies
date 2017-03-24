@@ -13,6 +13,6 @@
         *ngFor="let movie of movieList" [movie]="movie"></wm-movie-item>
 
   </div>
-  <ngb-pagination [collectionSize]="collectionSize" [maxSize]="maxSize" [rotate]="true" [boundaryLinks]="true" [(page)]="page" (pageChange)="pageChange($event)"></ngb-pagination>
+  <ngb-pagination [collectionSize]="collectionSize" [pageSize]="pageSize" [maxSize]="maxSize" [rotate]="true" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
 
 </md-card>

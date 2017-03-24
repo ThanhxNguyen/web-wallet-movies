@@ -19,12 +19,14 @@ let newReleaseDate = date.toISOString().substr(0, 10);
 
 //contain info for tabs on home page
 const POPULAR = "POPULAR";
-const NEW_RELEASE = "NEW RELEASE";
-const UPCOMING = "UPCOMING"
+const KIDS = "KIDS";
 const HOME_TABS = [
-  { type: NEW_RELEASE, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_date.gte=${currentDate}&primary_release_date.lte=${newReleaseDate}` },
   { type: POPULAR, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false` },
+  { type: KIDS, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&certification_country=US&certification.lte=G&sort_by=popularity.desc` },
 ]
+
+//new release movies for slide
+const newReleaseUrl = `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_date.gte=${currentDate}&primary_release_date.lte=${newReleaseDate}`;
 
 @Component({
   selector: 'wm-home',
@@ -52,6 +54,8 @@ export class HomeComponent implements OnInit {
   recommendations: Array<Genre> = [];
   recommendationLimit: number = 4;
   genreList: Array<Genre>;
+  //movies for slide 
+  newReleaseMovies: Array<Movie> = [];
 
   constructor(
     private movieService: MovieService,
@@ -62,8 +66,9 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     //set title for this page 
     this.titleService.setTitle('Home');
-    this.genreList = this.movieService.genreList;
-    if(!this.genreList || this.genreList.length == 0) {
+    
+    //if the genre list has already been cached, use it. Otherwise make a http request to get it from api
+    if(!this.movieService.genreList || this.movieService.genreList.length == 0) {
       this.movieService.getGenresFromApi()
                                   .subscribe(genres => {
                                       this.genreList = genres;
@@ -71,20 +76,36 @@ export class HomeComponent implements OnInit {
                                             this.recommendations = this.generateRandomGenreList(this.genreList);
                                           }
                                   });
+    } else {    
+      this.genreList = this.movieService.genreList;
+      this.recommendations = this.generateRandomGenreList(this.genreList);
     }
 
+    //get new release movies for slide 
+    this.movieService.getMovies(newReleaseUrl)
+                                .subscribe(
+                                    (data) => {
+                                      //get the first 10 movies from response
+                                      this.newReleaseMovies = data.movies.splice(0, 10);
+                                    },
+                                    () => {
+                                      //handling errors
+                                    }
+                                );
 
     //loop through HOME_TABS and get movies from api according to each tab and store data into tabs array.
     for(let i=0; i<HOME_TABS.length; i++) {
       let tab = HOME_TABS[i];
       let movieUrl = tab.url + `&page=${this.page}`;
+      
       this.movieService.getMovies(movieUrl).subscribe(
         //successfully getting movies from api
         (data) => {
           let tempTab: any = {};
           tempTab.label =  tab.type;
           tempTab.data = data.movies;
-          tempTab.totalPages = data.totalPages > 100 ? this.maxTotalPages : data.totalPages;
+          //limit the page size to 100 pages and 20 items per page
+          tempTab.totalResults = ( (data.totalResults / this.pageSize) > this.maxTotalPages ) ? (this.maxTotalPages * this.pageSize) : data.totalResults;
 
           this.tabs.push(tempTab);
         },
@@ -99,6 +120,11 @@ export class HomeComponent implements OnInit {
   onRecommendationClick(genre: Genre) {
     //navigate to movies page based on genre 
     this.router.navigate(['movies', 'genre', genre.id]);
+  }
+
+  //navigate to movie details page when slide image is clicked
+  showMovieDetails(movie: Movie): void {
+    this.router.navigate(['movie', movie.id]);
   }
 
   private generateRandomGenreList(genres: Array<Genre>): Array<Genre> {

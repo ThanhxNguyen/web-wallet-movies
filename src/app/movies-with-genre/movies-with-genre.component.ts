@@ -25,12 +25,13 @@ export class MoviesWithGenreComponent implements OnInit {
   maxSize:number = 5;
   page:number = 1;
   collectionSize:number;
+  pageSize: number = 20; //20 items per page
+  maxTotalPages: number = 100; //max 100 pages
 
   genreId: number;
   genreName: string;
   movieList: Array<Movie>;
   baseMoviesWithGenreUrl: string;
-  movieData: any;
 
   constructor(
     private movieService: MovieService,
@@ -47,6 +48,7 @@ export class MoviesWithGenreComponent implements OnInit {
     this.titleService.setTitle('Movies');
     this.currentRoute.params
                                 .switchMap( (params: Params) => {
+                                    this.movieList = [];
                                     //+ symbol converts id param string to number
                                     this.genreId = +params['id'];
                                     //get genre name base on this genre id 
@@ -74,9 +76,8 @@ export class MoviesWithGenreComponent implements OnInit {
                                     return this.movieService.getMovies(movieUrl);
                                 })
                                 .subscribe(data => {
-                                    this.movieData = data;
-                                    this.movieList = this.movieData.movies;
-                                    this.collectionSize = this.movieData.totalPages;
+                                    this.movieList = data.movies;
+                                    this.collectionSize =  ( (data.totalResults / this.pageSize) > this.maxTotalPages ) ? (this.maxTotalPages * this.pageSize) : data.totalResults;
                                 });
   }//end ngOnInit
 
@@ -88,8 +89,7 @@ export class MoviesWithGenreComponent implements OnInit {
 
     this.movieService.getMovies(movieUrl)
               .subscribe(data => {
-                this.movieData = data;
-                this.movieList = this.movieData.movies;
+                this.movieList = data.movies;
               });
   }
 

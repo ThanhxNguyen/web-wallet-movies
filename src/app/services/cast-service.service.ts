@@ -35,7 +35,7 @@ export class CastService {
     cast.profilePath = rawData.profile_path;
     cast.birthday = (rawData.birthday != null) ? rawData.birthday : 'unknown';
     cast.placeOfBirth = (rawData.place_of_birth != null) ? rawData.place_of_birth : 'unknown';
-    cast.biography = rawData.biography;
+    cast.biography = (rawData.biography != null) ? rawData.biography : 'No biography available yet!';
 
     return cast;
   }

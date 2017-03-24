@@ -76,7 +76,8 @@ export class NavbarComponent implements OnInit {
                                             .switchMap(value => {
                                                 if(value.trim()) {
                                                   let searchMoviesUrl = `${BASE_API_URL}/search/movie?api_key=${API_KEY}&query=${value}&language=en-US&page=1&include_adult=false`;
-                                                  return this.movieService.getMovies(searchMoviesUrl);
+                                                  return this.movieService.getMovies(searchMoviesUrl)
+                                                                  .map(data => data.movies);
                                                 } else {
                                                   return Observable.of<Movie[]>([]);
                                                 }

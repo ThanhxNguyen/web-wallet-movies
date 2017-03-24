@@ -57,7 +57,10 @@
           fxLayout="row" fxLayoutAlign="space-between center" 
           class="search-hint-row"
           (click)="onSearchHintRowClick(movie)">
-        <img src="http://image.tmdb.org/t/p/w92/{{movie.posterPath}}" alt="POSTER" style="height: 70px; width: 50px;">
+        <img 
+            onerror="this.src='/assets/no_poster_placeholder.png';"
+            src="http://image.tmdb.org/t/p/w92/{{movie.posterPath}}" alt="POSTER" 
+            style="height: 70px; width: 50px;">
         <span>{{ movie.title }}</span>
         <span fxLayout fxLayoutAlign="space-around center"><md-icon>star_rate</md-icon>&nbsp;&nbsp;{{ movie.voteAverage }}</span>
       </div>

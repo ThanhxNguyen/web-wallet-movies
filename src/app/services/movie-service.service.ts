@@ -53,7 +53,7 @@ export class MovieService {
                               let movies = this.parseMovies(rawData.results);
                               return {
                                 movies: movies,
-                                totalPages: rawData.total_pages
+                                totalResults: rawData.total_results
                               };
                             });
   }

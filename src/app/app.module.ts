@@ -7,7 +7,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import 'hammerjs';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+//ng-bootstrap components
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap/carousel/carousel.module';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap/pagination/pagination.module';
 
 //services
 import { MovieService } from './services/movie-service.service';
@@ -54,7 +56,8 @@ import { MoviesWithGenreComponent } from './movies-with-genre/movies-with-genre.
     MaterialModule,
     FlexLayoutModule.forRoot(),
     RouterModule.forRoot(routing),
-    NgbModule.forRoot()
+    NgbCarouselModule.forRoot(),
+    NgbPaginationModule.forRoot()
   ],
   providers: [
     MovieService,
