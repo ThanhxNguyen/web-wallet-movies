@@ -1,7 +1,6 @@
 .content {
     margin-top: 10px;
     margin-bottom: 50px;
-    padding: 10px;
 }
 
 .recommendation-link {
@@ -12,6 +11,10 @@
     /*font-weight: bold;*/
 }
 
+.dropdown-link {
+    font-size: .8em;
+}
+
 .slide-container {
     width: 100%;
 }
@@ -19,4 +22,11 @@
 .slide-container .slide-image {
     width: 100%; 
     height: 700px;
+}
+
+/*mobile screen size*/
+@media screen and (max-width: 599px) {
+    .slide-container .slide-image {
+        height: 500px;
+    }   
 }

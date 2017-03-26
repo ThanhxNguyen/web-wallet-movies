@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 //animation
 import { fadeInOut } from '../animations/fadeInOut.animation';
+// import { shrinkInOut } from '../animations/shrinkInOut.animation';
 
 import { BASE_API_URL, API_KEY } from '../../config/TMDB';
 import { MovieService } from '../services/movie-service.service';
@@ -87,6 +88,14 @@ export class NavbarComponent implements OnInit {
                                                 console.log(error);
                                                 return Observable.of<Movie[]>([]);
                                             });
+  }
+
+  //invoke when users press enter when searching for movies 
+  onEnterPressed(value: string): void {
+    if(value.trim().length > 0) {
+      this.searchTexts.next('');
+      this.router.navigate(['search'], { queryParams: {query: value} });
+    }
   }
 
   search(value: string): void {

@@ -9,6 +9,8 @@ import { BASE_API_URL, API_KEY } from '../../config/TMDB';
 import { Movie } from '../model/movie';
 import 'rxjs/add/operator/switchMap';
 
+const BASE_MOVIE_SEARCH_URL = `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false`;
+
 @Component({
   selector: 'wm-movies-with-genre',
   templateUrl: './movies-with-genre.component.html',
@@ -31,7 +33,6 @@ export class MoviesWithGenreComponent implements OnInit {
   genreId: number;
   genreName: string;
   movieList: Array<Movie>;
-  baseMoviesWithGenreUrl: string;
 
   constructor(
     private movieService: MovieService,
@@ -43,7 +44,6 @@ export class MoviesWithGenreComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.baseMoviesWithGenreUrl = `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false`;
     //set title for this page 
     this.titleService.setTitle('Movies');
     this.currentRoute.params
@@ -72,7 +72,7 @@ export class MoviesWithGenreComponent implements OnInit {
                                                                       }
                                                                   });
                                     }//end if-else
-                                    let movieUrl = this.baseMoviesWithGenreUrl + `&with_genres=${this.genreId}&page=${this.page}`;
+                                    let movieUrl = BASE_MOVIE_SEARCH_URL + `&with_genres=${this.genreId}&page=${this.page}`;
                                     return this.movieService.getMovies(movieUrl);
                                 })
                                 .subscribe(data => {
@@ -85,7 +85,7 @@ export class MoviesWithGenreComponent implements OnInit {
     //empty current list 
     this.movieList = [];
     this.page = currentPage;
-    let movieUrl = this.baseMoviesWithGenreUrl + `&with_genres=${this.genreId}&page=${this.page}`;
+    let movieUrl = BASE_MOVIE_SEARCH_URL + `&with_genres=${this.genreId}&page=${this.page}`;
 
     this.movieService.getMovies(movieUrl)
               .subscribe(data => {

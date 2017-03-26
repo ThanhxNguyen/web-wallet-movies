@@ -4,13 +4,40 @@
     <div
         fxLayout fxLayoutAlign="space-between stretch" fxLayoutWrap
         fxLayoutAlign.md="space-around stretch"
-        fxLayout.xs="column" fxAlayoutAlign.xs="space-between center">
+        fxLayoutAlign.sm="space-around stretch"
+        fxLayoutAlign.xs="center center">
         <md-card style="background-color: #03A9F4"
-            fxFlex="24%" fxFlex.md="49%" fxFlex.sm="49%" fxFlex.xs="98%"
+            fxFlex="24%" fxFlex.md="49%" fxFlex.sm="49%" fxHide.xs
             class="top10 bottom10"
             *ngFor="let item of recommendations">
             <button class="recommendation-link" md-button (click)="onRecommendationClick(item)">Top {{ item.name }}</button>
         </md-card>
+
+        <!--show only when on mobile screen size-->
+         <md-card 
+            style="background-color: #03A9F4"
+            class="bottom10"
+            fxFlex="98%"
+            fxHide fxShow.xs>
+             <button md-button class="recommendation-link"
+                (click)="toggleRecommendation = !toggleRecommendation">
+                 <md-icon *ngIf="!toggleRecommendation">keyboard_arrow_down</md-icon>
+                 <md-icon *ngIf="toggleRecommendation">keyboard_arrow_up</md-icon>
+                 <span>Recommendations</span>
+            </button>
+            <div 
+                [@shrinkInOut]="in"
+                *ngIf="toggleRecommendation">
+                <div *ngFor="let item of recommendations">
+                    <hr>
+                    <button 
+                        class="recommendation-link dropdown-link"
+                        md-button
+                        (click)="onRecommendationClick(item)">Top {{ item.name }} Movies</button>
+                </div>
+            </div>
+         </md-card>
+
     </div>
 
     <!--slide-->
@@ -27,10 +54,10 @@
 
 
     <!--home page main content-->
-    <md-card 
+    <md-tab-group 
+        class="content"
         *ngIf="tabs.length>0" [@fadeInOut]
-        class="content">
-    <md-tab-group (selectChange)="selectChange($event)">
+        (selectChange)="selectChange($event)">
 
         <md-tab *ngFor="let tab of tabs">
 
@@ -45,14 +72,12 @@
             </template>
             <div fxLayout fxLayoutAlign="space-between stretch" fxLayoutWrap>
                 <wm-movie-item 
-                    fxFlex="48%" fxFlex.sm="98%" fxFlex.xs="98%"
+                    fxFlex="49%" fxFlex.sm="98%" fxFlex.xs="98%"
                     *ngFor="let movie of tab.data" [movie]="movie"></wm-movie-item>
-                    
-                    <!--pagination-->
             </div>
+            <!--pagination-->
             <ngb-pagination [collectionSize]="tab.totalResults" [pageSize]="pageSize" [maxSize]="maxSize" [rotate]="true" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
         </md-tab>
 
     </md-tab-group>
-    </md-card>
 </div>

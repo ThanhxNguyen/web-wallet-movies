@@ -32,6 +32,7 @@ import { CastListComponent } from './cast-list/cast-list.component';
 import { CastItemComponent } from './cast-item/cast-item.component';
 import { CastDetailsComponent } from './cast-details/cast-details.component';
 import { MoviesWithGenreComponent } from './movies-with-genre/movies-with-genre.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { MoviesWithGenreComponent } from './movies-with-genre/movies-with-genre.
     CastListComponent,
     CastItemComponent,
     CastDetailsComponent,
-    MoviesWithGenreComponent
+    MoviesWithGenreComponent,
+    SearchResultsComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 // import { flyInOut } from '../animations/flyInOut.animation';
 import { fadeInOut } from '../animations/fadeInOut.animation';
+import { shrinkInOut } from '../animations/shrinkInOut.animation';
 import { BASE_API_URL, API_KEY } from '../../config/TMDB';
 //services
 import { MovieService } from '../services/movie-service.service';
@@ -26,13 +27,13 @@ const HOME_TABS = [
 ]
 
 //new release movies for slide
-const newReleaseUrl = `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_date.gte=${currentDate}&primary_release_date.lte=${newReleaseDate}`;
+const NEW_RELEASE_URL = `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_date.gte=${currentDate}&primary_release_date.lte=${newReleaseDate}`;
 
 @Component({
   selector: 'wm-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  animations: [fadeInOut],
+  animations: [fadeInOut, shrinkInOut],
   host: { 
     '[@fadeInOut]': 'true',
     '[style.display]': " 'block' "
@@ -56,6 +57,9 @@ export class HomeComponent implements OnInit {
   genreList: Array<Genre>;
   //movies for slide 
   newReleaseMovies: Array<Movie> = [];
+
+  //flag to indicate toggle state of recommendation dropdown
+  toggleRecommendation: boolean = false;
 
   constructor(
     private movieService: MovieService,
@@ -82,7 +86,7 @@ export class HomeComponent implements OnInit {
     }
 
     //get new release movies for slide 
-    this.movieService.getMovies(newReleaseUrl)
+    this.movieService.getMovies(NEW_RELEASE_URL)
                                 .subscribe(
                                     (data) => {
                                       //get the first 10 movies from response

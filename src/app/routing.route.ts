@@ -5,6 +5,7 @@ import { AboutComponent } from './about/about.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { CastDetailsComponent } from './cast-details/cast-details.component';
 import { MoviesWithGenreComponent } from './movies-with-genre/movies-with-genre.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 export const routing: Routes = [
@@ -18,6 +19,8 @@ export const routing: Routes = [
     { path: 'cast/:id', component: CastDetailsComponent },
     //movies base on genre route 
     { path: 'movies/genre/:id', component: MoviesWithGenreComponent },
+    //search results 
+    { path: 'search', component: SearchResultsComponent },
     //default route
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     //called when url is not found
