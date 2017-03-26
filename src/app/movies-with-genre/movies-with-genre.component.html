@@ -1,16 +1,6 @@
 <h2 class="heading">Top {{ genreName }} Movies</h2>
 <hr>
-<div 
-    *ngIf="movieList.length==0"
-    fxLayout fxLayoutAlign="center center">
-  <md-spinner></md-spinner>
-</div>
+<wm-movie-list [movieUrl]="movieUrl"></wm-movie-list>
 
-<div fxLayout fxLayoutAlign="space-between stretch" fxLayoutWrap>
-  <wm-movie-item 
-      fxFlex="49%" fxFlex.sm="98%" fxFlex.xs="98%"
-      *ngFor="let movie of movieList" [movie]="movie"></wm-movie-item>
-</div>
-<ngb-pagination [collectionSize]="collectionSize" [pageSize]="pageSize" [maxSize]="maxSize" [rotate]="true" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
 
 

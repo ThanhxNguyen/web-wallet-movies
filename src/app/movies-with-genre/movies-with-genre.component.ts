@@ -23,16 +23,10 @@ const BASE_MOVIE_SEARCH_URL = `${BASE_API_URL}/discover/movie?api_key=${API_KEY}
 })
 export class MoviesWithGenreComponent implements OnInit {
 
-  //pagination
-  maxSize:number = 5;
-  page:number = 1;
-  collectionSize:number;
-  pageSize: number = 20; //20 items per page
-  maxTotalPages: number = 100; //max 100 pages
-
   genreId: number;
   genreName: string;
   movieList: Array<Movie>;
+  movieUrl: string;
 
   constructor(
     private movieService: MovieService,
@@ -47,10 +41,11 @@ export class MoviesWithGenreComponent implements OnInit {
     //set title for this page 
     this.titleService.setTitle('Movies');
     this.currentRoute.params
-                                .switchMap( (params: Params) => {
+                                .subscribe( (params: Params) => {
                                     this.movieList = [];
                                     //+ symbol converts id param string to number
                                     this.genreId = +params['id'];
+                                    this.movieUrl = BASE_MOVIE_SEARCH_URL + `&with_genres=${this.genreId}`;
                                     //get genre name base on this genre id 
                                     if(this.movieService.genreList != null && this.movieService.genreList.length > 0) {
                                       //there is genre list in cache, use it
@@ -72,25 +67,7 @@ export class MoviesWithGenreComponent implements OnInit {
                                                                       }
                                                                   });
                                     }//end if-else
-                                    let movieUrl = BASE_MOVIE_SEARCH_URL + `&with_genres=${this.genreId}&page=${this.page}`;
-                                    return this.movieService.getMovies(movieUrl);
-                                })
-                                .subscribe(data => {
-                                    this.movieList = data.movies;
-                                    this.collectionSize =  ( (data.totalResults / this.pageSize) > this.maxTotalPages ) ? (this.maxTotalPages * this.pageSize) : data.totalResults;
                                 });
   }//end ngOnInit
-
-  pageChange(currentPage): void {
-    //empty current list 
-    this.movieList = [];
-    this.page = currentPage;
-    let movieUrl = BASE_MOVIE_SEARCH_URL + `&with_genres=${this.genreId}&page=${this.page}`;
-
-    this.movieService.getMovies(movieUrl)
-              .subscribe(data => {
-                this.movieList = data.movies;
-              });
-  }
 
 }

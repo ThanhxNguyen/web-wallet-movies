@@ -46,7 +46,8 @@
             <template ngbSlide *ngFor="let movie of newReleaseMovies">
                 <img 
                     (click)="showMovieDetails(movie)"
-                    src="//image.tmdb.org/t/p/original/{{movie.posterPath}}" alt="Random first slide" 
+                    src="//image.tmdb.org/t/p/original/{{movie.posterPath}}" alt="POSTER IMAGE" 
+                    onerror="this.src='/assets/no_poster_placeholder.png';"
                     class="img-responsive clickable-chip slide-image">
             </template>
         </ngb-carousel>
@@ -56,27 +57,13 @@
     <!--home page main content-->
     <md-tab-group 
         class="content"
-        *ngIf="tabs.length>0" [@fadeInOut]
-        (selectChange)="selectChange($event)">
+        *ngIf="homeTabs.length>0" [@fadeInOut]>
 
-        <md-tab *ngFor="let tab of tabs">
-
-            <div 
-                *ngIf="tab.data.length==0"
-                fxLayout fxLayoutAlign="center center">
-                <md-spinner></md-spinner>
-            </div>
-
+        <md-tab *ngFor="let tab of homeTabs">
             <template md-tab-label>
-                <h1>{{ tab.label }}</h1>
+                <h1>{{ tab.type }}</h1>
             </template>
-            <div fxLayout fxLayoutAlign="space-between stretch" fxLayoutWrap>
-                <wm-movie-item 
-                    fxFlex="49%" fxFlex.sm="98%" fxFlex.xs="98%"
-                    *ngFor="let movie of tab.data" [movie]="movie"></wm-movie-item>
-            </div>
-            <!--pagination-->
-            <ngb-pagination [collectionSize]="tab.totalResults" [pageSize]="pageSize" [maxSize]="maxSize" [rotate]="true" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
+            <wm-movie-list [movieUrl]="tab.url"></wm-movie-list>
         </md-tab>
 
     </md-tab-group>

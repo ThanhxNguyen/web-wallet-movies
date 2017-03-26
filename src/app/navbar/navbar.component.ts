@@ -94,7 +94,7 @@ export class NavbarComponent implements OnInit {
   onEnterPressed(value: string): void {
     if(value.trim().length > 0) {
       this.searchTexts.next('');
-      this.router.navigate(['search'], { queryParams: {query: value} });
+      this.router.navigate(['search'], { queryParams: {query: value.trim()} });
     }
   }
 

@@ -1,21 +1,4 @@
 <h2 class="heading">Search results for: <span style="font-style: italic;">{{ querySearch }}</span></h2>
 <hr>
-<div 
-    *ngIf="loading"
-    fxLayout fxLayoutAlign="center center">
-  <md-spinner></md-spinner>
-</div>
+<wm-movie-list [movieUrl]="movieUrl"></wm-movie-list>
 
-<div 
-    *ngIf="!loading && movieList.length===0"
-    fxLayout fxLayoutAlign="center center">
-    <p style='font-family: roboto, "Helvetica Neue", sans-serif; font-size: 1em;'>No movies found!</p>
-</div>
-
-<div fxLayout fxLayoutAlign="space-between stretch" fxLayoutWrap>
-  <wm-movie-item 
-      fxFlex="49%" fxFlex.sm="98%" fxFlex.xs="98%"
-      *ngFor="let movie of movieList" [movie]="movie"></wm-movie-item>
-</div>
-<!--pagination-->
-<ngb-pagination [collectionSize]="collectionSize" [pageSize]="pageSize" [maxSize]="maxSize" [rotate]="true" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>

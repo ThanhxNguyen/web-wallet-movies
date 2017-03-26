@@ -3,16 +3,16 @@
 
   <section>
     <div 
-        fxLayout="row" fxLayoutAlign="space-between center" fxLayoutWrap>
-      <div fxFlex="48%" fxFlex.xs="100%">
+        fxLayout="row" fxLayoutAlign="space-between start" fxLayoutWrap>
+      <div fxFlex="49%" fxFlex.sm="100%" fxFlex.xs="100%">
         <img 
             (click)="showMovieDetails(movie)" 
-            class="movie-image img-responsive clickable-chip" 
+            class="img-responsive movie-image clickable-chip" 
             src="//image.tmdb.org/t/p/w342/{{movie.posterPath}}" alt="POSTER IMAGE"
             onerror="this.src='/assets/no_poster_placeholder.png';">
       </div>
-      <div fxFlex="48%" fxFlex.xs="100%">
-        <div fxLayout="column" fxLayoutAlign="center">
+      <div fxFlex="48%" fxFlex.sm="100%" fxFlex.xs="100%">
+        <div fxLayout="column" fxLayoutAlign="space-between start">
           <md-card-title class="movie-title">{{ movie.title }}</md-card-title>
           <md-card-subtitle>
             <md-chip-list>
@@ -32,8 +32,8 @@
     </div>
   </section>
   <hr>
-    <md-card-content class="movie-description">
-      <p>
+    <md-card-content>
+      <p class="movie-description">
         {{ (movie.overview.length > descriptionLimit) ? movie.overview.substr( 0, (descriptionLimit + 1) ) + "..." : movie.overview }}
       </p>
     </md-card-content>

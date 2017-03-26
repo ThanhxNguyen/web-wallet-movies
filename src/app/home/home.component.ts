@@ -21,10 +21,6 @@ let newReleaseDate = date.toISOString().substr(0, 10);
 //contain info for tabs on home page
 const POPULAR = "POPULAR";
 const KIDS = "KIDS";
-const HOME_TABS = [
-  { type: POPULAR, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false` },
-  { type: KIDS, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&certification_country=US&certification.lte=G&sort_by=popularity.desc` },
-]
 
 //new release movies for slide
 const NEW_RELEASE_URL = `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_date.gte=${currentDate}&primary_release_date.lte=${newReleaseDate}`;
@@ -41,16 +37,13 @@ const NEW_RELEASE_URL = `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&langu
 })
 export class HomeComponent implements OnInit {
 
-  //pagination
-  maxSize: number = 5;
-  page: number = 1;
-  maxTotalPages: number = 100;
-  //items per page
-  pageSize: number = 20;
+homeTabs = [
+  { type: POPULAR, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false` },
+  { type: KIDS, url: `${BASE_API_URL}/discover/movie?api_key=${API_KEY}&language=en-US&certification_country=US&certification.lte=G&sort_by=popularity.desc` },
+];
 
   //store tabs in array
   tabs: Array<any> = [];
-  selectedTab: number = 0;
   //an array to store random selected genres to display top 20 movies with random genres on home page 
   recommendations: Array<Genre> = [];
   recommendationLimit: number = 4;
@@ -90,34 +83,13 @@ export class HomeComponent implements OnInit {
                                 .subscribe(
                                     (data) => {
                                       //get the first 10 movies from response
-                                      this.newReleaseMovies = data.movies.splice(0, 10);
+                                      let movies = data.movies.splice(0, 10);
+                                      this.newReleaseMovies = movies.filter(movie => movie.posterPath != null);
                                     },
                                     () => {
                                       //handling errors
                                     }
                                 );
-
-    //loop through HOME_TABS and get movies from api according to each tab and store data into tabs array.
-    for(let i=0; i<HOME_TABS.length; i++) {
-      let tab = HOME_TABS[i];
-      let movieUrl = tab.url + `&page=${this.page}`;
-      
-      this.movieService.getMovies(movieUrl).subscribe(
-        //successfully getting movies from api
-        (data) => {
-          let tempTab: any = {};
-          tempTab.label =  tab.type;
-          tempTab.data = data.movies;
-          //limit the page size to 100 pages and 20 items per page
-          tempTab.totalResults = ( (data.totalResults / this.pageSize) > this.maxTotalPages ) ? (this.maxTotalPages * this.pageSize) : data.totalResults;
-
-          this.tabs.push(tempTab);
-        },
-        () => {
-          //failed to get movies from api, errors occur
-          //do something
-        });
-    }
 
   }//end ngOnInit
 
@@ -159,25 +131,6 @@ export class HomeComponent implements OnInit {
     }//end while loop
 
     return randomNumbersArr;
-  }
-
-  //invoked when pagination changes
-  pageChange(currentPage): void {
-    let tab = this.tabs[this.selectedTab];
-    //empty old movie list in this tab 
-    tab.data = [];
-    this.page = currentPage;
-    let movieUrl = HOME_TABS[this.selectedTab].url + `&page=${this.page}`;
-    console.log('url: ' + movieUrl);
-    this.movieService.getMovies(movieUrl)
-                .subscribe(data => tab.data = data.movies);
-  }
-
-  //invoked when current active tab changes
-  selectChange(tab): void {
-    //reset pagination 
-    this.page = 1;
-    this.selectedTab = tab.index;
   }
 
 }
