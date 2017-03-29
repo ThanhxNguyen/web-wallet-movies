@@ -1,4 +1,5 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -14,6 +15,9 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap/pagination/pagin
 //services
 import { MovieService } from './services/movie-service.service';
 import { CastService } from './services/cast-service.service';
+
+//pipes
+// import { OrderByPipe } from './pipes/order-by.pipe';
 
 //routing
 import { RouterModule } from '@angular/router';
@@ -51,13 +55,15 @@ import { MovieListComponent } from './movie-list/movie-list.component';
     CastDetailsComponent,
     MoviesWithGenreComponent,
     SearchResultsComponent,
-    MovieListComponent
+    MovieListComponent,
+    // OrderByPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     MaterialModule,
+    BrowserAnimationsModule,
     FlexLayoutModule.forRoot(),
     RouterModule.forRoot(routing),
     NgbCarouselModule.forRoot(),

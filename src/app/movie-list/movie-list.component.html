@@ -7,22 +7,32 @@
 
 <!--show when no movies in the list-->
 <div 
-    *ngIf="movieList.length===0"
+    *ngIf="!loading && movieList.length===0"
     fxLayout fxLayoutAlign="center center">
-    <p style='font-family: roboto, "Helvetica Neue", sans-serif; font-size: 1em;'>No movies available!</p>
+    <p style='font-family: roboto, "Helvetica Neue", sans-serif; font-size: 1em;'>No movies found!</p>
 </div>
+
+<!--<form>
+    <md-icon>sort</md-icon>
+    <md-select placeholder="-- Sort --" [(ngModel)]="selectedValue" name="sort">
+        <md-option *ngFor="let sortValue of sortArr" [value]="sortValue">
+        {{ sortValue }}
+        </md-option>
+    </md-select>
+</form>-->
 
 <!--movie list-->
 <div 
     *ngIf="movieList.length > 0"
     fxLayout fxLayoutAlign="space-between stretch" fxLayoutWrap>
-      <wm-movie-item 
-          fxFlex="49%" fxFlex.sm="49.5%" fxFlex.xs="100%"
-          *ngFor="let movie of movieList" [movie]="movie"></wm-movie-item>
+    <wm-movie-item 
+        fxFlex="49%" fxFlex.sm="49.5%" fxFlex.xs="100%"
+        *ngFor="let movie of movieList" [movie]="movie"></wm-movie-item>
 </div>
 <!--pagination-->
 <ngb-pagination
     [disabled]="movieList.length===0"
     [collectionSize]="collectionSize" [pageSize]="pageSize" 
-    [maxSize]="maxSize" [rotate]="true" size="sm"
+    [maxSize]="maxSize" [rotate]="true" [size]="sm"
     (pageChange)="pageChange($event)"></ngb-pagination>
+

@@ -17,6 +17,11 @@
 
 /*mobile screen size*/
 @media screen and (max-width: 599px) {
+    .movie-title {
+        height: auto;
+        min-height: 0;
+    }
+
     .movie-description {
         height: auto;
     }
@@ -34,11 +39,16 @@
     }
 
     .movie-description {
-        height: 8em;
+        height: 7em;
     }
 }
 
 @media screen and (min-width: 800px) and (max-width: 959px) {
+    .movie-image {
+        margin-bottom: 5px;
+        height: 250px;
+    }
+
     .movie-description {
         /*min-height: 4em;*/
         height: 6em;

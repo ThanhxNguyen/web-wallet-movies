@@ -8,6 +8,7 @@ export class Movie {
     status: string;
     voteAverage: number;
     posterPath: string;
+    backdropPath: string;
     genres: Array<Genre>;
     budget: number;
     productionCountries: Array<string>;

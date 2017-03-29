@@ -84,7 +84,7 @@ homeTabs = [
                                     (data) => {
                                       //get the first 10 movies from response
                                       let movies = data.movies.splice(0, 10);
-                                      this.newReleaseMovies = movies.filter(movie => movie.posterPath != null);
+                                      this.newReleaseMovies = movies.filter(movie => movie.backdropPath != null);
                                     },
                                     () => {
                                       //handling errors

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { Movie } from '../model/movie';
 import { MovieService } from '../services/movie-service.service';
 
@@ -7,7 +7,7 @@ import { MovieService } from '../services/movie-service.service';
   templateUrl: './movie-list.component.html',
   styleUrls: ['./movie-list.component.css']
 })
-export class MovieListComponent implements OnInit {
+export class MovieListComponent implements OnInit, OnChanges {
 
   //this is the movie url to get movies from api
   @Input() movieUrl: string;
@@ -19,7 +19,8 @@ export class MovieListComponent implements OnInit {
   //items per page
   pageSize: number = 20;
   collectionSize: number;
-  paginationSize: string;
+
+  sortArr = ['Title', 'Date', 'Vote'];
 
   movieList: Array<Movie>;
   loading: boolean;

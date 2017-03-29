@@ -19,9 +19,17 @@
     width: 100%;
 }
 
+.slide-caption {
+    font-family: roboto, "Helvetica Neue", sans-serif;
+}
+
+.slide-caption .slide-caption-heading {
+    font-size: 1.5em;
+}
+
 .slide-container .slide-image {
     width: 100%; 
-    height: 700px;
+    height: 500px;
 }
 
 /*mobile screen size*/

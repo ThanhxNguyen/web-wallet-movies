@@ -98,6 +98,7 @@ export class MovieService {
       movie.releaseDate = tempMovie.release_date;
       movie.voteAverage = tempMovie.vote_average;
       movie.posterPath = tempMovie.poster_path;
+      movie.backdropPath = tempMovie.backdrop_path;
 
       let genresArr: Array<Genre> = [];
       if(tempMovie.genre_ids != null && tempMovie.genre_ids.length > 0) {

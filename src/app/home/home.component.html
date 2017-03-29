@@ -42,17 +42,19 @@
 
     <!--slide-->
     <div class="slide-container">
-        <ngb-carousel interval="3000" wrap="true">
-            <template ngbSlide *ngFor="let movie of newReleaseMovies">
-                <img 
-                    (click)="showMovieDetails(movie)"
-                    src="//image.tmdb.org/t/p/original/{{movie.posterPath}}" alt="POSTER IMAGE" 
-                    onerror="this.src='/assets/no_poster_placeholder.png';"
-                    class="img-responsive clickable-chip slide-image">
-            </template>
-        </ngb-carousel>
+    <ngb-carousel interval="3000" wrap="true">
+        <template ngbSlide *ngFor="let movie of newReleaseMovies" [id]="movie.id">
+            <img 
+                (click)="showMovieDetails(movie)"
+                src="//image.tmdb.org/t/p/w1280/{{movie.backdropPath}}" alt="POSTER IMAGE" 
+                onerror="this.src='/assets/no_poster_placeholder.png';"
+                class="img-responsive clickable-chip slide-image">
+                <div class="carousel-caption slide-caption">
+                    <h3 class="slide-caption-heading">{{ movie.title }}</h3>
+                </div>
+        </template>
+    </ngb-carousel>
     </div>
-
 
     <!--home page main content-->
     <md-tab-group 
